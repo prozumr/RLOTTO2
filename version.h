@@ -6,20 +6,20 @@
 	static const char THISPROG[] = "RLOTTO";						
 	
 	//Software Status
-	static const char STATUS[] = "v0.3 Alpha";
-	static const char STATUS_SHORT[] = "v0.3a";
+	static const char STATUS[] = "v0.4 Alpha";
+	static const char STATUS_SHORT[] = "v0.4a";
 	
 	//Standard Version Type
 	static const long MAJOR = 0;
-	static const long MINOR = 3;
-	static const long BUILD = 229;
-	static const long REVISION = 1341;
+	static const long MINOR = 4;
+	static const long BUILD = 231;
+	static const long REVISION = 1352;
 	
 	//Miscellaneous Version Types
 	static const long BUILDS_COUNT = 317;
 	#define RC_FILEVERSION 0,3,228,1341
-	#define RC_FILEVERSION_STRING "0, 3, 229, 1341\0"
-	static const char FULLVERSION_STRING[] = "0.3.228.1341";
+	#define RC_FILEVERSION_STRING "0, 3, 231, 1352\0"
+	static const char FULLVERSION_STRING[] = "0.4.231.1352";
 	
 	//These values are to keep track of your versioning state, don't modify them.
 	static const long BUILD_HISTORY = 28;

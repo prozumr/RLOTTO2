@@ -303,7 +303,7 @@ int enterInput() {
     for(RowNo = 0;RowNo < NOLR; RowNo++)
         for(i = 0; i < 6; i++)
             for(j = 0; j < 6; j++)
-                if(LottoNo[RowNo][i] == ALN[j])
+                if(current.T_Row[RowNo][i] == ALN[j])
                     MPR[RowNo]++ ;
 
     // check for correct Super and Bonus Number '''''''''''''''''''''''''''''''
@@ -318,7 +318,7 @@ int enterInput() {
                     CSN[RowNo] = true;
             } else {
                     for(i = 0; i < 6; i++)
-                        if(LottoNo[RowNo][i] == ABN)
+                        if(current.T_Row[RowNo][i] == ABN)
                             CBN[RowNo] = true;
 
                     }
@@ -340,33 +340,33 @@ int enterInput() {
             strcpy(WinMsg, getWinClass(MPR[RowNo], CSN[RowNo]));
 
         switch(MPR[RowNo]) {
-            case 0: {   printf("Row No %2i: %2i %2i %2i %2i %2i %2i\t(%s / no match)\n",RowNo + 1,LottoNo[RowNo][0], LottoNo[RowNo][1],LottoNo[RowNo][2],LottoNo[RowNo][3],LottoNo[RowNo][4],LottoNo[RowNo][5],&WinMsg);
-                        fprintf(pFile, "Row No %2i: %2i %2i %2i %2i %2i %2i\t(%s / no match)\n",RowNo + 1,LottoNo[RowNo][0], LottoNo[RowNo][1],LottoNo[RowNo][2],LottoNo[RowNo][3],LottoNo[RowNo][4],LottoNo[RowNo][5],&WinMsg);
+            case 0: {   printf("Row No %2i: %2i %2i %2i %2i %2i %2i\t(%s / no match)\n",RowNo + 1,current.T_Row[RowNo][0], current.T_Row[RowNo][1],current.T_Row[RowNo][2],current.T_Row[RowNo][3],current.T_Row[RowNo][4],current.T_Row[RowNo][5],&WinMsg);
+                        fprintf(pFile, "Row No %2i: %2i %2i %2i %2i %2i %2i\t(%s / no match)\n",RowNo + 1,current.T_Row[RowNo][0], current.T_Row[RowNo][1],current.T_Row[RowNo][2],current.T_Row[RowNo][3],current.T_Row[RowNo][4],current.T_Row[RowNo][5],&WinMsg);
                     }
                     break;
-            case 1: {   printf("Row No %2i: %2i %2i %2i %2i %2i %2i\t(%s / %i match)\n",RowNo + 1,LottoNo[RowNo][0], LottoNo[RowNo][1],LottoNo[RowNo][2],LottoNo[RowNo][3],LottoNo[RowNo][4],LottoNo[RowNo][5],&WinMsg,MPR[RowNo]);
-                        fprintf(pFile, "Row No %2i: %2i %2i %2i %2i %2i %2i\t(%s / %i match)\n",RowNo + 1,LottoNo[RowNo][0], LottoNo[RowNo][1],LottoNo[RowNo][2],LottoNo[RowNo][3],LottoNo[RowNo][4],LottoNo[RowNo][5],&WinMsg,MPR[RowNo]);
+            case 1: {   printf("Row No %2i: %2i %2i %2i %2i %2i %2i\t(%s / %i match)\n",RowNo + 1,current.T_Row[RowNo][0], current.T_Row[RowNo][1],current.T_Row[RowNo][2],current.T_Row[RowNo][3],current.T_Row[RowNo][4],current.T_Row[RowNo][5],&WinMsg,MPR[RowNo]);
+                        fprintf(pFile, "Row No %2i: %2i %2i %2i %2i %2i %2i\t(%s / %i match)\n",RowNo + 1,current.T_Row[RowNo][0], current.T_Row[RowNo][1],current.T_Row[RowNo][2],current.T_Row[RowNo][3],current.T_Row[RowNo][4],current.T_Row[RowNo][5],&WinMsg,MPR[RowNo]);
                     }
                     break;
-            case 2: {   printf("Row No %2i: %2i %2i %2i %2i %2i %2i\t(%s / %i matches)\n",RowNo + 1,LottoNo[RowNo][0], LottoNo[RowNo][1],LottoNo[RowNo][2],LottoNo[RowNo][3],LottoNo[RowNo][4],LottoNo[RowNo][5],&WinMsg,MPR[RowNo]);
-                        fprintf(pFile, "Row No %2i: %2i %2i %2i %2i %2i %2i\t(%s / %i matches)\n",RowNo + 1,LottoNo[RowNo][0], LottoNo[RowNo][1],LottoNo[RowNo][2],LottoNo[RowNo][3],LottoNo[RowNo][4],LottoNo[RowNo][5],&WinMsg,MPR[RowNo]);
+            case 2: {   printf("Row No %2i: %2i %2i %2i %2i %2i %2i\t(%s / %i matches)\n",RowNo + 1,current.T_Row[RowNo][0], current.T_Row[RowNo][1],current.T_Row[RowNo][2],current.T_Row[RowNo][3],current.T_Row[RowNo][4],current.T_Row[RowNo][5],&WinMsg,MPR[RowNo]);
+                        fprintf(pFile, "Row No %2i: %2i %2i %2i %2i %2i %2i\t(%s / %i matches)\n",RowNo + 1,current.T_Row[RowNo][0], current.T_Row[RowNo][1],current.T_Row[RowNo][2],current.T_Row[RowNo][3],current.T_Row[RowNo][4],current.T_Row[RowNo][5],&WinMsg,MPR[RowNo]);
                     }
                     break;
             case 6: {   if(CSN[RowNo] == true) {
-                            printf("Row No %2i: %2i %2i %2i %2i %2i %2i\t(%s / %i matches + correct super number)\n",RowNo + 1,LottoNo[RowNo][0], LottoNo[RowNo][1],LottoNo[RowNo][2],LottoNo[RowNo][3],LottoNo[RowNo][4],LottoNo[RowNo][5],&WinMsg,MPR[RowNo]);
-                            fprintf(pFile, "Row No %2i: %2i %2i %2i %2i %2i %2i\t(%s / %i matches + correct super number)\n",RowNo + 1,LottoNo[RowNo][0], LottoNo[RowNo][1],LottoNo[RowNo][2],LottoNo[RowNo][3],LottoNo[RowNo][4],LottoNo[RowNo][5],&WinMsg,MPR[RowNo]);
+                            printf("Row No %2i: %2i %2i %2i %2i %2i %2i\t(%s / %i matches + correct super number)\n",RowNo + 1,current.T_Row[RowNo][0], current.T_Row[RowNo][1],current.T_Row[RowNo][2],current.T_Row[RowNo][3],current.T_Row[RowNo][4],current.T_Row[RowNo][5],&WinMsg,MPR[RowNo]);
+                            fprintf(pFile, "Row No %2i: %2i %2i %2i %2i %2i %2i\t(%s / %i matches + correct super number)\n",RowNo + 1,current.T_Row[RowNo][0], current.T_Row[RowNo][1],current.T_Row[RowNo][2],current.T_Row[RowNo][3],current.T_Row[RowNo][4],current.T_Row[RowNo][5],&WinMsg,MPR[RowNo]);
                         } else {
-                            printf("Row No %2i: %2i %2i %2i %2i %2i %2i\t(%s / %i matches)\n",RowNo + 1,LottoNo[RowNo][0], LottoNo[RowNo][1],LottoNo[RowNo][2],LottoNo[RowNo][3],LottoNo[RowNo][4],LottoNo[RowNo][5],&WinMsg,MPR[RowNo]);
-                            fprintf(pFile, "Row No %2i: %2i %2i %2i %2i %2i %2i\t(%s / %i matches)\n",RowNo + 1,LottoNo[RowNo][0], LottoNo[RowNo][1],LottoNo[RowNo][2],LottoNo[RowNo][3],LottoNo[RowNo][4],LottoNo[RowNo][5],&WinMsg,MPR[RowNo]);
+                            printf("Row No %2i: %2i %2i %2i %2i %2i %2i\t(%s / %i matches)\n",RowNo + 1,current.T_Row[RowNo][0], current.T_Row[RowNo][1],current.T_Row[RowNo][2],current.T_Row[RowNo][3],current.T_Row[RowNo][4],current.T_Row[RowNo][5],&WinMsg,MPR[RowNo]);
+                            fprintf(pFile, "Row No %2i: %2i %2i %2i %2i %2i %2i\t(%s / %i matches)\n",RowNo + 1,current.T_Row[RowNo][0], current.T_Row[RowNo][1],current.T_Row[RowNo][2],current.T_Row[RowNo][3],current.T_Row[RowNo][4],current.T_Row[RowNo][5],&WinMsg,MPR[RowNo]);
                         }
                     }
                     break;
             default: {  if(CBN[RowNo] == true) {
-                            printf("Row No %2i: %2i %2i %2i %2i %2i %2i\t(%s / %i matches + correct bonus number)\n",RowNo + 1,LottoNo[RowNo][0], LottoNo[RowNo][1],LottoNo[RowNo][2],LottoNo[RowNo][3],LottoNo[RowNo][4],LottoNo[RowNo][5],&WinMsg,MPR[RowNo]);
-                            fprintf(pFile, "Row No %2i: %2i %2i %2i %2i %2i %2i\t(%s / %i matches + correct bonus number)\n",RowNo + 1,LottoNo[RowNo][0], LottoNo[RowNo][1],LottoNo[RowNo][2],LottoNo[RowNo][3],LottoNo[RowNo][4],LottoNo[RowNo][5],&WinMsg,MPR[RowNo]);
+                            printf("Row No %2i: %2i %2i %2i %2i %2i %2i\t(%s / %i matches + correct bonus number)\n",RowNo + 1,current.T_Row[RowNo][0], current.T_Row[RowNo][1],current.T_Row[RowNo][2],current.T_Row[RowNo][3],current.T_Row[RowNo][4],current.T_Row[RowNo][5],&WinMsg,MPR[RowNo]);
+                            fprintf(pFile, "Row No %2i: %2i %2i %2i %2i %2i %2i\t(%s / %i matches + correct bonus number)\n",RowNo + 1,current.T_Row[RowNo][0], current.T_Row[RowNo][1],current.T_Row[RowNo][2],current.T_Row[RowNo][3],current.T_Row[RowNo][4],current.T_Row[RowNo][5],&WinMsg,MPR[RowNo]);
                         } else {
-                            printf("Row No %2i: %2i %2i %2i %2i %2i %2i\t(%s / %i Matches)\n",RowNo + 1,LottoNo[RowNo][0], LottoNo[RowNo][1],LottoNo[RowNo][2],LottoNo[RowNo][3],LottoNo[RowNo][4],LottoNo[RowNo][5],&WinMsg,MPR[RowNo]);
-                            fprintf(pFile, "Row No %2i: %2i %2i %2i %2i %2i %2i\t(%s / %i Matches)\n",RowNo + 1,LottoNo[RowNo][0], LottoNo[RowNo][1],LottoNo[RowNo][2],LottoNo[RowNo][3],LottoNo[RowNo][4],LottoNo[RowNo][5],&WinMsg,MPR[RowNo]);
+                            printf("Row No %2i: %2i %2i %2i %2i %2i %2i\t(%s / %i Matches)\n",RowNo + 1,current.T_Row[RowNo][0], current.T_Row[RowNo][1],current.T_Row[RowNo][2],current.T_Row[RowNo][3],current.T_Row[RowNo][4],current.T_Row[RowNo][5],&WinMsg,MPR[RowNo]);
+                            fprintf(pFile, "Row No %2i: %2i %2i %2i %2i %2i %2i\t(%s / %i Matches)\n",RowNo + 1,current.T_Row[RowNo][0], current.T_Row[RowNo][1],current.T_Row[RowNo][2],current.T_Row[RowNo][3],current.T_Row[RowNo][4],current.T_Row[RowNo][5],&WinMsg,MPR[RowNo]);
                         }
                     }
         }

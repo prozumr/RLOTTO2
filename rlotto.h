@@ -31,6 +31,7 @@
 #ifndef RLOTTO_H
 #define RLOTTO_H
 #define N 80
+#define NOLR 12														// N_umber O_f L_ottery R_ows -1 (First Row with index 0)
  
  /* GLOBAL VARIABLES */
 bool go_Exit;
