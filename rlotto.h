@@ -31,19 +31,21 @@
 #ifndef RLOTTO_H
 #define RLOTTO_H
 #define N 80
-#define NOLR 12														// N_umber O_f L_ottery R_ows -1 (First Row with index 0)
+#define NOLR 12															// N_umber O_f L_ottery R_ows -1 (First Row with index 0)
  
  /* GLOBAL VARIABLES */
 bool go_Exit;
+struct date { short month, day, year; };								// not used !? => check
 
-/*static const char THISPROG[] = "LOTTOCHECK";						// Program Name
-char cTicketNo[8] = "2649458";										// Ticket Number
-char cPlayers[128] = "Bodo, Jan, Marek, Nicole, Pieter, Reinhard";	// Players*/
+/*static const char THISPROG[] = "LOTTOCHECK";							// Program Name
+char cTicketNo[8] = "2649458";											// Ticket Number
+char cPlayers[128] = "Bodo, Jan, Marek, Nicole, Pieter, Reinhard";		// Players*/
 extern int ALN[6];														// Actual Lottery Numbers
 extern int ABN;															// Actual Bonus Number
 extern int ASN;															// Actual Super Number
 extern char cG77[8];													// Actual Game 77 Number
 extern char cSU6[7];													// Actual Super 6 Number
+extern char TicketFolder[13];                             				// Folder to store results
 extern char ResultFolder[13];                             				// Folder to store results
 extern FILE *pFile;                                                 	// Pointer to result file
 
@@ -51,6 +53,7 @@ extern FILE *pFile;                                                 	// Pointer 
 #define MAX_T_PLAYER_SZ 64							// Max characters for player name
 #define MAX_LINE_LENGTH 80							// Max characters for length of a ticket row
 #define T_EXT ".tck"								// File extension for lottery tickets
+
 
 
  
@@ -95,4 +98,4 @@ struct ticket {
 	char display_GSP[4];							// range: yes,no
 
 
-#endif
+#endif // TICKET_H_INCLUDED

@@ -1,5 +1,5 @@
  /*t_evaluate.c | RLotto | gcc | v0.0.3.0
- * Console program for storing and evaluating lottery ticket results.
+ * Console program for storing and evaluating lottery ticket resultt.
  * ----------------------------------------------------------------------------
  *
  * Objective:	Evaluate selected ticket based on corresponding draw results
@@ -25,16 +25,9 @@
 #include "rlotto.h"
 #include "version.h"
 
-/* GLOBAL VARIABLES **********************************************************/
+/* GLOBAL VARIABLES ***********************************************************/
 
-int ALN[6];											// Actual Lottery Numbers
-int ABN = 0;										// Actual Bonus Number
-int ASN = -1;										// Actual Super Number
-char cG77[8];										// Actual Game 77 Number
-char cSU6[7];										// Actual Super 6 Number
-char ResultFolder[13] = ".\\results\\";				// Folder to store results
-FILE *pFile = NULL;									// Pointer to result file
-struct tm ts;										// standard date type
+struct tm tt;										// standard date type
 
 /* FUCTION DECLARATION *******************************************************/
 
@@ -65,7 +58,7 @@ int evaluateTicket(void) {
 	char sPostfix[5] = ".txt";                  // File extension
 	char sDrwDate[25];                          // Drawing Date formatted as part of filename
 
-	printf("\n\nEnter actual drawing results.\n");
+	printf("\n\nEnter actual drawing resultt.\n");
 	
 	// Call function to enter drawing results
 	enterInput();
@@ -80,7 +73,7 @@ int evaluateTicket(void) {
 	if(sConfirm == 'y') {
 
 		// Create Filename
-		strftime(sDrwDate, N, "%Y-%m-%d", &ts); strcpy(sPath, ResultFolder);
+		strftime(sDrwDate, N, "%Y-%m-%d", &tt); strcpy(sPath, ResultFolder);
 		strcat(sPath, sPrefix); strcat(sPath, sDrwDate); strcat(sPath, sPostfix);
 
 		// Open result file for output
@@ -104,7 +97,7 @@ int evaluateTicket(void) {
 
 		fprintf(pFile, "\nPlayers: %s\n", &current.T_Player);
 
-		strftime(sDrwDate, N, "%A, %d-%b-%Y", &ts);
+		strftime(sDrwDate, N, "%A, %d-%b-%Y", &tt);
 
 		fprintf(pFile, "\nDrawing Date: %s\n", sDrwDate);
 		fprintf(pFile, "Lottery numbers: %i %i %i %i %i %i\n",ALN[0],ALN[1],ALN[2],ALN[3],ALN[4],ALN[5]);
@@ -163,19 +156,19 @@ int enterInput() {
 
     } while(is_ok == false);
 
-    ts.tm_year = year - 1900;
-    ts.tm_mon  = month - 1;
-    ts.tm_mday = day;
+    tt.tm_year = year - 1900;
+    tt.tm_mon  = month - 1;
+    tt.tm_mday = day;
 
-    ts.tm_hour = 0;
-    ts.tm_min  = 0;
-    ts.tm_sec  = 1;
-    ts.tm_isdst = -1;
+    tt.tm_hour = 0;
+    tt.tm_min  = 0;
+    tt.tm_sec  = 1;
+    tt.tm_isdst = -1;
 
-    if ( mktime(&ts) == -1 )
-      ts.tm_wday = 7;
+    if ( mktime(&tt) == -1 )
+      tt.tm_wday = 7;
 
-	strftime(sPlayDate, 40, "%A, %d-%b-%Y", &ts);
+	strftime(sPlayDate, 40, "%A, %d-%b-%Y", &tt);
 
     is_ok = false;		// reset to false for next evaluation
     first_input = true;	// reset to true for next evaluation
@@ -261,7 +254,7 @@ int enterInput() {
 
  	// Console Output
 
-    strftime(sDrwDate, N, "%A, %d-%b-%Y", &ts);
+    strftime(sDrwDate, N, "%A, %d-%b-%Y", &tt);
 
     printf("\nCheck your input:\n");
     printf("\nDrawing Date: %s\n", sDrwDate);
@@ -329,7 +322,7 @@ int enterInput() {
 
     // Console Output
 
-    strftime(sDrwDate, N, "%A, %d-%b-%Y", &ts);
+    strftime(sDrwDate, N, "%A, %d-%b-%Y", &tt);
     printf("\nLottery Matches on %s\n\n", sDrwDate);
 
     for(RowNo = 0; RowNo < NOLR; RowNo++) {

@@ -37,6 +37,17 @@
 #include "rlotto.h"
 #include "version.h"
 
+/* GLOBAL VARIABLES **********************************************************/
+
+int ALN[6];											// Actual Lottery Numbers
+int ABN = 0;										// Actual Bonus Number
+int ASN = -1;										// Actual Super Number
+char cG77[8];										// Actual Game 77 Number
+char cSU6[7];										// Actual Super 6 Number
+char TicketFolder[13] = ".\\tickets\\";				// Folder to store results
+char ResultFolder[13] = ".\\results\\";				// Folder to store results
+FILE *pFile = NULL;									// Pointer to result file
+
 
 /******************************************************************************
  * MAIN

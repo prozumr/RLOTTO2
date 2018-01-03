@@ -53,24 +53,33 @@ int selectTicket(void) {
 	char fn_array[100] [12];								// Array filename with extension (str length + 1)
 	
     // First run just to count number of tickets 
-	d = opendir(".");
+	d = opendir(TicketFolder);
+	
+	printf("\nDEBUG 01\n\n");
     if (d)
-    {
+    {	printf("\nDEBUG 02\n\n");
 		while ((dir = readdir(d)) != NULL)
         {
+			printf("\nDEBUG 03\n\n");
 			char *fn = dir->d_name;							// fn: file name
 			char * ext = strrchr(fn, '.');					// ext: file extension
 			if(strcmp(ext, T_EXT) == 0) 					// File extension for lottery tickets
 			{
 				i++;
 			}
+			printf("\nDEBUG 04\n\n");
         }
+		printf("\nDEBUG 05\n\n");
         closedir(d);
+		printf("\nDEBUG 06\n\n");
 		i_max = i;
+		printf("\nDEBUG 07\n\n");
     }
 	
+	
+	
 	// Second run to read ticket file names in array for all files matching file extension
-	d = opendir(".");
+	d = opendir(TicketFolder);
 	
     if (d)
 	{	
@@ -88,6 +97,7 @@ int selectTicket(void) {
         }
         closedir(d);
     }
+	
 	
 	// i equals null --> no ticket found
 	if(i == 0) 
@@ -115,6 +125,7 @@ int selectTicket(void) {
 	}
 	
 	
+	
 	// Call function for reading selected ticket
 	
 	read_Ticket(ticket_no);
@@ -136,11 +147,13 @@ int selectTicket(void) {
 		int sConfirm;					// yes or no to confirm ticket for further evaluation
 
 		
-		// Build file name
-		
-		char t_filename[12];
-		strcpy(t_filename, ticket_no);
+		// construct filename
+		char t_filename[45];
+		strcpy(t_filename, TicketFolder);
+		strcat(t_filename, ticket_no);
 		strcat(t_filename, T_EXT);
+		
+		printf("\nDEBUG t_filename: %s\n", t_filename);
 		
 		// Open file for reading ----------------------------------
 		

@@ -1,5 +1,5 @@
  /*t_add.c | RLotto | gcc | v0.0.3.0
- * Console program for storing and evaluating lottery ticket results.
+ * Console program for storing and evaluating lottery ticket resultt.
  * ----------------------------------------------------------------------------
  *
  * Objective:	Create and store new ticket as ASCII file to file system.
@@ -24,6 +24,10 @@
 #include <time.h>
 #include "rlotto.h"
 
+//GLOBAL VARIABLES
+struct tm tt;										// standard date type
+
+
 // FUNCTION DECLARATION
 
 int t_initialize(void);
@@ -42,11 +46,6 @@ void map_t_attributes(int choice);
 bool isCorrectTicketNo(char *n);
 bool isCorrectDateFormat(int m, int d, int y);
 bool isLeapYear(const int iYear);
-
-
-// GLOBAL VARIABLES
-
-struct tm ts;											// standard date type
 
  
 /******************************************************************************
@@ -216,21 +215,21 @@ int addTicket(void) {
     	
     } while(is_ok == false);
 
-    ts.tm_year = year - 1900;
-    ts.tm_mon  = month - 1;
-    ts.tm_mday = day;
+    tt.tm_year = year - 1900;
+    tt.tm_mon  = month - 1;
+    tt.tm_mday = day;
 
-    ts.tm_hour = 0;
-    ts.tm_min  = 0;
-    ts.tm_sec  = 1;
-    ts.tm_isdst = -1;
+    tt.tm_hour = 0;
+    tt.tm_min  = 0;
+    tt.tm_sec  = 1;
+    tt.tm_isdst = -1;
 
-    if ( mktime(&ts) == -1 )
-      ts.tm_wday = 7;
+    if ( mktime(&tt) == -1 )
+      tt.tm_wday = 7;
 	
-	// strftime(sPlayDate, 40, "%A, %d-%B-%Y", &ts); <---- 
+	// strftime(sPlayDate, 40, "%A, %d-%B-%Y", &tt); <---- 
 	
-	strftime(sPlayDate, 11, "%d.%m.%Y", &ts);
+	strftime(sPlayDate, 11, "%d.%m.%Y", &tt);
 	
 	
 	strcpy(current.T_Start , sPlayDate);						// Assign ticket Start Date to structure
@@ -538,9 +537,12 @@ void get_T_Rows(void){
 void write_Ticket(void){
 	
 	// construct filename
-	char *t_filename;
-	strcpy(t_filename, current.T_No);
+	char t_filename[45];
+	strcpy(t_filename, TicketFolder);
+	strcat(t_filename, current.T_No);
 	strcat(t_filename, T_EXT);
+	
+	printf("\nFull path: %s\n", &t_filename);
 	
 	
 	// Open file and write
