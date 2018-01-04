@@ -2,3 +2,5 @@
 *.tck
 results/Lotto-Result-2018-01-02.txt
 *.tck
+*.save
+*.depend

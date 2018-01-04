@@ -13,22 +13,22 @@
  * This file is part of RLotto.                                               */
 
  // HEADER SECTION
- 
+
 #include <stdio.h>
-#include <stdbool.h> 
+#include <stdbool.h>
 #include <stdlib.h>
 #include <ctype.h>
 #include <string.h>
 #include <dirent.h>
 #include "rlotto.h"
- 
- 
+
+
 /* FUCTION DECLARATION *******************************************************/
 
 void read_Ticket(char *ticket_no);
-void display_Ticket(void);	
+void display_Ticket(void);
 
- 
+
 /*	SELECT TICKET ****************************************************************
 	Search path of executable binary for lottery tickets and displays a sub menu
 	to select which ticket to open. Afterwards read_Ticket function is called to
@@ -36,53 +36,48 @@ void display_Ticket(void);
 	confirms selected ticket the function for ticket evaluation is called.
 	*****************************************************************************/
 
-	
+
 int selectTicket(void) {
-	
+
 	char ticket_no[7];
-	
+
 	printf("\nTICKET SELECTION\n\n");
-	
+
 	// Find all files in path of binary executable file. Requires dirent.h
-	
+
 	int i = 0;
 	int i_min = 1, i_max;
 	int i_input = 0;
 	DIR *d;
     struct dirent *dir;
 	char fn_array[100] [12];								// Array filename with extension (str length + 1)
-	
-    // First run just to count number of tickets 
+
+    // First run just to count number of tickets
 	d = opendir(TicketFolder);
-	
-	printf("\nDEBUG 01\n\n");
+
     if (d)
-    {	printf("\nDEBUG 02\n\n");
+    {
 		while ((dir = readdir(d)) != NULL)
         {
-			printf("\nDEBUG 03\n\n");
 			char *fn = dir->d_name;							// fn: file name
 			char * ext = strrchr(fn, '.');					// ext: file extension
 			if(strcmp(ext, T_EXT) == 0) 					// File extension for lottery tickets
 			{
 				i++;
 			}
-			printf("\nDEBUG 04\n\n");
         }
-		printf("\nDEBUG 05\n\n");
+
         closedir(d);
-		printf("\nDEBUG 06\n\n");
 		i_max = i;
-		printf("\nDEBUG 07\n\n");
     }
-	
-	
-	
+
+
+
 	// Second run to read ticket file names in array for all files matching file extension
 	d = opendir(TicketFolder);
-	
+
     if (d)
-	{	
+	{
 		i = 0;												// Reset counter i
 		while ((dir = readdir(d)) != NULL)
         {
@@ -97,14 +92,14 @@ int selectTicket(void) {
         }
         closedir(d);
     }
-	
-	
+
+
 	// i equals null --> no ticket found
-	if(i == 0) 
+	if(i == 0)
 	{
 		 // no ticket found
 		 printf("\nNo ticket found in selected directory.\n");
-	} 
+	}
 	else
 	{
 		printf("\n%i ticket(s) found in selected directory.\n", i_max);
@@ -118,25 +113,25 @@ int selectTicket(void) {
 				printf("\n \"%d\" is not between %i and %i !\n",i_input, i_min, i_max);
 			}
 		}while(i_input < 1 || i_input > i_max);
-			
+
 		strncpy(ticket_no, fn_array[i_input - 1] + 0,7);
 		ticket_no[7] = '\0';
 		printf("\nTicket No %s has been selected.\n", ticket_no);
 	}
-	
-	
-	
+
+
+
 	// Call function for reading selected ticket
-	
+
 	read_Ticket(ticket_no);
 }
 
 /*	READ TICKET ****************************************************************
 	Reads selected ticket into ticket structure
 	*****************************************************************************/
-	
+
 	void read_Ticket(char *ticket_no) {
-		
+
 		FILE *fp;						// file pointer
 		char line[MAX_LINE_LENGTH];		// array for line string
 		int lnr;  						// line number of input file
@@ -146,63 +141,61 @@ int selectTicket(void) {
 		char *token4, *token5, *token6;	// token 4-6 for lottery numbers
 		int sConfirm;					// yes or no to confirm ticket for further evaluation
 
-		
+
 		// construct filename
 		char t_filename[45];
 		strcpy(t_filename, TicketFolder);
 		strcat(t_filename, ticket_no);
 		strcat(t_filename, T_EXT);
-		
-		printf("\nDEBUG t_filename: %s\n", t_filename);
-		
+
 		// Open file for reading ----------------------------------
-		
+
 		lnr = 0;
 		fp = fopen(t_filename, "r");
-		
+
 		if(fp == NULL) {
-		
+
 			printf("Error opening file!\n");
-		
+
 		} else {
-		
+
 			while(fgets(line, MAX_LINE_LENGTH, fp) != NULL){
-				
+
 				strtok(line, "\n");			// Remove trailing new line character
-				
+
 				lnr++;
-				
+
 				// Parsing input and copy into current ticket structure ----------------------------------
-				
+
 				// separate input line
-				
+
 				description = strtok(line, ":");
 				value = strtok(0, ":");
-				
+
 				// reading values into ticket structure
-				
+
 				switch(lnr){
-					
-					case 1: 	
+
+					case 1:
 						strcpy(current.T_No, value); break;
 					case 2:
 						strcpy(current.T_Player, value); break;
-					case 3: 
+					case 3:
 						strcpy(current.T_Start, value); break;
-					case 4: 
+					case 4:
 						strcpy(current.T_Runtime, value); break;
-					case 5: 
+					case 5:
 						strcpy(current.T_D_Day, value); break;
-					case 6: 
+					case 6:
 						strcpy(current.T_G77, value); break;
-					case 7: 
+					case 7:
 						strcpy(current.T_SU6, value); break;
-					case 8: 
+					case 8:
 						strcpy(current.T_GSP, value); break;
-					case 9: 
+					case 9:
 						current.T_Max_Row = atoi(value); break;
-					case 10: 
-					
+					case 10:
+
 						token1 = strtok(value, ","); current.T_Row[lnr -10][0] = atoi(token1);
 						token2 = strtok(0, ","); current.T_Row[lnr -10][1] = atoi(token2);
 						token3 = strtok(0, ","); current.T_Row[lnr -10][2] = atoi(token3);
@@ -210,9 +203,9 @@ int selectTicket(void) {
 						token5 = strtok(0, ","); current.T_Row[lnr -10][4] = atoi(token5);
 						token6 = strtok(0, ","); current.T_Row[lnr -10][5] = atoi(token6);
 						break;
-					
-					case 11: 
-					
+
+					case 11:
+
 						token1 = strtok(value, ","); current.T_Row[lnr -10][0] = atoi(token1);
 						token2 = strtok(0, ","); current.T_Row[lnr -10][1] = atoi(token2);
 						token3 = strtok(0, ","); current.T_Row[lnr -10][2] = atoi(token3);
@@ -220,9 +213,9 @@ int selectTicket(void) {
 						token5 = strtok(0, ","); current.T_Row[lnr -10][4] = atoi(token5);
 						token6 = strtok(0, ","); current.T_Row[lnr -10][5] = atoi(token6);
 						break;
-					
-					case 12: 
-					
+
+					case 12:
+
 						token1 = strtok(value, ","); current.T_Row[lnr -10][0] = atoi(token1);
 						token2 = strtok(0, ","); current.T_Row[lnr -10][1] = atoi(token2);
 						token3 = strtok(0, ","); current.T_Row[lnr -10][2] = atoi(token3);
@@ -230,9 +223,9 @@ int selectTicket(void) {
 						token5 = strtok(0, ","); current.T_Row[lnr -10][4] = atoi(token5);
 						token6 = strtok(0, ","); current.T_Row[lnr -10][5] = atoi(token6);
 						break;
-					
-					case 13: 
-					
+
+					case 13:
+
 						token1 = strtok(value, ","); current.T_Row[lnr -10][0] = atoi(token1);
 						token2 = strtok(0, ","); current.T_Row[lnr -10][1] = atoi(token2);
 						token3 = strtok(0, ","); current.T_Row[lnr -10][2] = atoi(token3);
@@ -240,9 +233,9 @@ int selectTicket(void) {
 						token5 = strtok(0, ","); current.T_Row[lnr -10][4] = atoi(token5);
 						token6 = strtok(0, ","); current.T_Row[lnr -10][5] = atoi(token6);
 						break;
-					
-					case 14: 
-					
+
+					case 14:
+
 						token1 = strtok(value, ","); current.T_Row[lnr -10][0] = atoi(token1);
 						token2 = strtok(0, ","); current.T_Row[lnr -10][1] = atoi(token2);
 						token3 = strtok(0, ","); current.T_Row[lnr -10][2] = atoi(token3);
@@ -250,9 +243,9 @@ int selectTicket(void) {
 						token5 = strtok(0, ","); current.T_Row[lnr -10][4] = atoi(token5);
 						token6 = strtok(0, ","); current.T_Row[lnr -10][5] = atoi(token6);
 						break;
-					
-					case 15: 
-					
+
+					case 15:
+
 						token1 = strtok(value, ","); current.T_Row[lnr -10][0] = atoi(token1);
 						token2 = strtok(0, ","); current.T_Row[lnr -10][1] = atoi(token2);
 						token3 = strtok(0, ","); current.T_Row[lnr -10][2] = atoi(token3);
@@ -260,9 +253,9 @@ int selectTicket(void) {
 						token5 = strtok(0, ","); current.T_Row[lnr -10][4] = atoi(token5);
 						token6 = strtok(0, ","); current.T_Row[lnr -10][5] = atoi(token6);
 						break;
-					
-					case 16: 
-					
+
+					case 16:
+
 						token1 = strtok(value, ","); current.T_Row[lnr -10][0] = atoi(token1);
 						token2 = strtok(0, ","); current.T_Row[lnr -10][1] = atoi(token2);
 						token3 = strtok(0, ","); current.T_Row[lnr -10][2] = atoi(token3);
@@ -270,9 +263,9 @@ int selectTicket(void) {
 						token5 = strtok(0, ","); current.T_Row[lnr -10][4] = atoi(token5);
 						token6 = strtok(0, ","); current.T_Row[lnr -10][5] = atoi(token6);
 						break;
-					
-					case 17: 
-					
+
+					case 17:
+
 						token1 = strtok(value, ","); current.T_Row[lnr -10][0] = atoi(token1);
 						token2 = strtok(0, ","); current.T_Row[lnr -10][1] = atoi(token2);
 						token3 = strtok(0, ","); current.T_Row[lnr -10][2] = atoi(token3);
@@ -280,9 +273,9 @@ int selectTicket(void) {
 						token5 = strtok(0, ","); current.T_Row[lnr -10][4] = atoi(token5);
 						token6 = strtok(0, ","); current.T_Row[lnr -10][5] = atoi(token6);
 						break;
-					
+
 					case 18:
-					
+
 						token1 = strtok(value, ","); current.T_Row[lnr -10][0] = atoi(token1);
 						token2 = strtok(0, ","); current.T_Row[lnr -10][1] = atoi(token2);
 						token3 = strtok(0, ","); current.T_Row[lnr -10][2] = atoi(token3);
@@ -290,9 +283,9 @@ int selectTicket(void) {
 						token5 = strtok(0, ","); current.T_Row[lnr -10][4] = atoi(token5);
 						token6 = strtok(0, ","); current.T_Row[lnr -10][5] = atoi(token6);
 						break;
-					
-					case 19: 
-					
+
+					case 19:
+
 						token1 = strtok(value, ","); current.T_Row[lnr -10][0] = atoi(token1);
 						token2 = strtok(0, ","); current.T_Row[lnr -10][1] = atoi(token2);
 						token3 = strtok(0, ","); current.T_Row[lnr -10][2] = atoi(token3);
@@ -300,9 +293,9 @@ int selectTicket(void) {
 						token5 = strtok(0, ","); current.T_Row[lnr -10][4] = atoi(token5);
 						token6 = strtok(0, ","); current.T_Row[lnr -10][5] = atoi(token6);
 						break;
-					
-					case 20: 
-					
+
+					case 20:
+
 						token1 = strtok(value, ","); current.T_Row[lnr -10][0] = atoi(token1);
 						token2 = strtok(0, ","); current.T_Row[lnr -10][1] = atoi(token2);
 						token3 = strtok(0, ","); current.T_Row[lnr -10][2] = atoi(token3);
@@ -310,9 +303,9 @@ int selectTicket(void) {
 						token5 = strtok(0, ","); current.T_Row[lnr -10][4] = atoi(token5);
 						token6 = strtok(0, ","); current.T_Row[lnr -10][5] = atoi(token6);
 						break;
-					
-					case 21: 
-					
+
+					case 21:
+
 						token1 = strtok(value, ","); current.T_Row[lnr -10][0] = atoi(token1);
 						token2 = strtok(0, ","); current.T_Row[lnr -10][1] = atoi(token2);
 						token3 = strtok(0, ","); current.T_Row[lnr -10][2] = atoi(token3);
@@ -320,27 +313,27 @@ int selectTicket(void) {
 						token5 = strtok(0, ","); current.T_Row[lnr -10][4] = atoi(token5);
 						token6 = strtok(0, ","); current.T_Row[lnr -10][5] = atoi(token6);
 						break;
-					
+
 					default:
 					printf("\n Error parsing ticket file.\n");
-					
+
 				}
-			
+
 		}
-		
-		
+
+
 		fclose(fp);
-		
+
 	}
-		
+
 		// Display selected Ticket ----------------------------------
-		
+
 		display_Ticket();
-		
+
 		// confirm for evaluation ----------------------------------
-		
+
 		printf("Evaluate this ticket now? [y/n]: ");
-		
+
 		do {
 			sConfirm = tolower(getche());
 			if(sConfirm != 'y' && sConfirm != 'n')
@@ -352,7 +345,7 @@ int selectTicket(void) {
 				t_initialize;
 				exit;
 			}
-				
+
 		} while(sConfirm != 'y' && sConfirm != 'n');
-		
+
 	}

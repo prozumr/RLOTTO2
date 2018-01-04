@@ -11,10 +11,10 @@
  *
  * ----------------------------------------------------------------------------
  * This file is part of RLotto.                                               */
- 
+
 
  // HEADER SECTION
- 
+
 #include <stdio.h>
 #include <stdbool.h>
 #include <stdlib.h>
@@ -40,18 +40,21 @@ bool isCorrectDateFormat(int m, int d, int y);		// validating date format
 bool isCorrectLotteryRow(int *LotteryNo);			// checks valid range & duplicates
 bool isCorrectBonusNo(int BN, int *LoNo);			// check if bonus number already exists
 int convertToDigit( char c );						// converts single char in range of '1' to '9' to number.
-char *getWinClass(int matches, bool bonus_super );	// returns win class based on lottery matches 
+char *getWinClass(int matches, bool bonus_super );	// returns win class based on lottery matches
 
  /*	*****************************************************************************
 	EVALUATE TICKET
 	*****************************************************************************/
 
-/*  Enter actuals drawings results and evaluate against selected ticket. This 
-	function create the output/result file and calls all sub functions for ticket 
-	evaluation. */                                                                          
+/*  Enter actuals drawings results and evaluate against selected ticket. This
+	function create the output/result file and calls all sub functions for ticket
+	evaluation. */
+
+
+	// TODO (camelo#2#01/03/18): Implement condition to evaluate only enabled options (e.g. G77)
 
 int evaluateTicket(void) {
-	
+
 	int sConfirm;						        // yes or no to confirm user input
 	char sPath[45];                             // Full pathname for result file
 	char sPrefix[14] = "Lotto-Result-";         // File prefix
@@ -59,10 +62,10 @@ int evaluateTicket(void) {
 	char sDrwDate[25];                          // Drawing Date formatted as part of filename
 
 	printf("\n\nEnter actual drawing resultt.\n");
-	
+
 	// Call function to enter drawing results
 	enterInput();
-	
+
 	// Final confirmation for starting evaluation
 	printf("\nEvaluate results now? [y/n]: ");
 
@@ -81,7 +84,7 @@ int evaluateTicket(void) {
 		if(pFile == NULL) {
 			printf("\nResult folder missing. Try to create now...\n", sPath);
 			system("mkdir results");
-			pFile = fopen(sPath, "w"); 
+			pFile = fopen(sPath, "w");
 			if(pFile == NULL) {
 				printf("Error opening %s for writing. Program terminated.", sPath);
 				abort();
@@ -118,11 +121,11 @@ int evaluateTicket(void) {
 		 // Close result file
 		fclose(pFile);
 		printf("\nResults written to %s.\n", sPath);
-	
-	
-	
-	
-	} else 
+
+
+
+
+	} else
 		exit;
 }
 
@@ -172,6 +175,8 @@ int enterInput() {
 
     is_ok = false;		// reset to false for next evaluation
     first_input = true;	// reset to true for next evaluation
+
+    // TODO (camelo#1#01/03/18): Implement check for ticket validity against drawing date
 
  	// Actual Lottery Numbers '''''''''''''''''''''''''''''''''''''''''''''''''
 
@@ -500,11 +505,12 @@ int enterInput() {
  * check GLUCKSPIRALE
  ******************************************************************************
 
- Evaluates ticket against actual result for 'Glueckspirale'. */   
- 
+ Evaluates ticket against actual result for 'Glueckspirale'. */
+
+ // TODO (camelo#1#01/03/18): Implement evaluation for Glueckspirale
+
  int checkGSP() {
-	 
-	 
+
+
 	 return 0;
  }
- 

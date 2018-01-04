@@ -11,10 +11,10 @@
  *
  * ----------------------------------------------------------------------------
  * This file is part of RLotto.                                               */
- 
+
 
  // HEADER SECTION
- 
+
 #include <stdio.h>
 #include <stdbool.h>
 #include <stdlib.h>
@@ -39,13 +39,13 @@ void display_Ticket(void);
  * IsCorrectTicketNo
  *****************************************************************************/
 // Checks length and character (only '0' to '9' are allowed)
- 
+
  bool isCorrectTicketNo(char *n) {
-	 
+
 	 bool result = false;
 	 int x;
 	 int y = 0;
-	 
+
 	 // check for characters - only 0-9 are allowed
 	 for(int i = 0; i < 7; i++) {
 		 x = n[i] - 0;
@@ -54,29 +54,29 @@ void display_Ticket(void);
 		 else
 			break;
 	 }
-	 
+
 	 if(y == 7)
 		 result = true;
 	 return result;
  }
- 
+
  /******************************************************************************
  * IsCorrectDateFormat
  *****************************************************************************/
 
 bool isCorrectDateFormat(int m, int d, int y) {
-	
+
 	int ii = 0;		// incremented by 1 for each positive validation
 	int febdays;	// used for number of days depending on year
-	
+
 	/* Checking month '''''''''''''''''''''''''''''''''''''''''''''''''''''' */
 	if(m > 0 && m < 13)
-		ii++;		
+		ii++;
 	else
 		printf("\nInvalid value for month!\n");
-	
+
 	/* Checking day depending on month ''''''''''''''''''''''''''''''''''''' */
-	
+
 	// Jan, Mar, May, Jul, Aug, Oct, Dec
 	if(m==1|| m==3 || m==5 || m==7 || m==8 || m==10 || m==12) {
 		if(d > 0 && d < 32)
@@ -84,42 +84,42 @@ bool isCorrectDateFormat(int m, int d, int y) {
 		else
 			printf("\nInvalid value for day!\n");
 	}
-	
+
 	// Feb (validating leap years)
-	
+
 	if((isLeapYear(y)) == true)
 		febdays = 29;
 	else
 		febdays = 28;
-	
+
 	if(m==2) {
 		if(d > 0 && d < (febdays + 1))
 			ii++;
 		else
 			printf("\nInvalid value for day!\n");
 	}
-	
+
 	// Apr, Jun, Sep, Nov
 	if(m==4|| m==6 || m==9 || m==11) {
 		if(d > 0 && d < 31)
 			ii++;
-		else 
+		else
 			printf("\nInvalid value for day!\n");
-	}	
-	
+	}
+
 	/* Checking year ''''''''''''''''''''''''''''''''''''''''''''''''''''''' */
 	if(y > 999 && y < 9999)								// to ensure 4 digits
 		ii++;
 	else
 		printf("\nInvalid value for year!\n");
-		
+
 	/* Evaluating complete result '''''''''''''''''''''''''''''''''''''''''' */
-	
+
 	if(ii == 3)
 		return true;
 	else
 		return false;
-	
+
 }
 
 /******************************************************************************
@@ -139,7 +139,7 @@ bool isLeapYear(const int iYear)
     return true;
 
   return false;
-}  
+}
 
 /******************************************************************************
  * MAP TICKET ATTRIBUTES
@@ -148,18 +148,18 @@ bool isLeapYear(const int iYear)
  /* Map some structure data first to some more human readable values for display on stdout.
 	This is required since the input data for some ticket attributes differs from the output
 	format. E.g. y => yes
-	
+
 	1: maps 	current.T_Runtime	=> display_runtime
 	2: maps 	current.T_D_Day		=> display_weekday
 	3: maps 	current.T_G77		=> display_G77
 	4: maps 	current.T_SU6		=> display_SU6
 	5: maps 	current.T_GSP		=> display_GSP
- 
+
  */
- 
+
  void map_t_attributes(int choice) {
-	 
-	
+
+
 	// range of allowed values
 	char runtime_o1[2] = "1", runtime_o2[2] = "2", runtime_o3[2] = "3",
 	runtime_o4[2] = "4", runtime_o5[2] = "5", runtime_o6[2] = "m", runtime_o7[2] = "p";
@@ -167,12 +167,12 @@ bool isLeapYear(const int iYear)
 	char T_G77_o1[2] = "y", T_G77_o2[2] = "n";
 	char T_SU6_o1[2] = "y", T_SU6_o2[2] = "n";
 	char T_GSP_o1[2] = "y", T_GSP_o2[2] = "n";
-	 
+
 	 switch(choice) {
-		 
+
 		 // Runtime
-		 case 1: 
-			
+		 case 1:
+
 			if(strcmp(current.T_Runtime, runtime_o1) == 0) strcpy(display_runtime, "1 week");
 			else if(strcmp(current.T_Runtime, runtime_o2) == 0) strcpy(display_runtime, "2 weeks");
 			else if(strcmp(current.T_Runtime, runtime_o3) == 0) strcpy(display_runtime, "3 weeks");
@@ -181,100 +181,100 @@ bool isLeapYear(const int iYear)
 			else if(strcmp(current.T_Runtime, runtime_o6) == 0) strcpy(display_runtime, "month");
 			else if(strcmp(current.T_Runtime, runtime_o7) == 0) strcpy(display_runtime, "permanent");
 			else strcpy(display_runtime, "");
-		 
+
 		 break;
-		 
+
 		 // Weekday
-		 case 2: 
+		 case 2:
 			if(strcmp(current.T_D_Day, weekday_o1) == 0) strcpy(display_weekday, "Sat");
 			else if(strcmp(current.T_D_Day, weekday_o2) == 0) strcpy(display_weekday, "Wed");
 			else if(strcmp(current.T_D_Day, weekday_o3) == 0) strcpy(display_weekday, "Wed + Sat");
 			else strcpy(display_weekday, "");
 		 break;
-		 
+
 		 // Game 77
 		 case 3:
-		 
+
 			if(strcmp(current.T_G77, T_G77_o1) == 0) strcpy(display_G77, "yes");
 			else if(strcmp(current.T_G77, T_G77_o2) == 0) strcpy(display_G77, "no");
 			else strcpy(display_G77, "");
-		 
+
 		 break;
-		 
+
 		 // Super 6
 		 case 4:
-		 
+
 			if(strcmp(current.T_SU6, T_SU6_o1) == 0) strcpy(display_SU6, "yes");
 			else if(strcmp(current.T_SU6, T_SU6_o2) == 0) strcpy(display_SU6, "no");
 			else strcpy(display_SU6, "");
-			 
+
 		 break;
-		 
+
 		 // Glueckspirale
 		 case 5:
-		 
+
 			if(strcmp(current.T_GSP, T_GSP_o1) == 0) strcpy(display_GSP, "yes");
 			else if(strcmp(current.T_GSP, T_GSP_o2) == 0) strcpy(display_GSP, "no");
 			else strcpy(display_GSP, "");
-		 
+
 		 break;
-		 
+
 		 default: ;
-	
+
 	 }
  }
- 
- 
+
+
  /******************************************************************************
- * Display Ticket 
+ * Display Ticket
  *****************************************************************************/
-/* Displays ticket on terminal to confirm selection. This function can be used 
-for new tickets before writing ticket to file system or for existing tickets. 
+/* Displays ticket on terminal to confirm selection. This function can be used
+for new tickets before writing ticket to file system or for existing tickets.
 A loop for cofirming the selection is NOT part of the function itself. Note
 that this function requires that the actual ticket data to display are already
 expected to be in the current global ticket structure. */
 
 void display_Ticket(void) {
-	
+
 	int i;
-	
+
 	char runtime_o1[2] = "1", runtime_o2[2] = "2", runtime_o3[2] = "3",
 	runtime_o4[2] = "4", runtime_o5[2] = "5", runtime_o6[2] = "m", runtime_o7[2] = "p";
 	char weekday_o1 [2] = "s", weekday_o2 [2] = "w", weekday_o3 [2] = "b";
 	char T_G77_o1[2] = "y", T_G77_o2[2] = "n";
 	char T_SU6_o1[2] = "y", T_SU6_o2[2] = "n";
 	char T_GSP_o1[2] = "y", T_GSP_o2[2] = "n";
-	
+
 	/* Map some structure data first to some more human readable values for display on stdout */
-	
+
 	map_t_attributes(1);	// Runtime
 	map_t_attributes(2);	// Weekday
 	map_t_attributes(3);	// Game 77
 	map_t_attributes(4);	// Super 6
 	map_t_attributes(5);	// Glueckspirale
-	
+
 	// Display ticket -----------------------------------------
-	
+
 	printf("\n===============================================================================\n\n");
 	printf("  Ticket No: %-11sPlayer: %-26s Active Rows: %-10d\n", current.T_No, current.T_Player, current.T_Max_Row);
 	printf("  Date: %-16sTicket Runtime: %-19sWeekday: %-10s\n", current.T_Start, display_runtime, display_weekday);
 	printf("  Game 77: %-13sSuper 6: %-26sGlueckspirale: %-10s\n", display_G77, display_SU6, display_GSP);
 	printf("\n===============================================================================\n\n");
-	
+
 	for(i = 0; i < 12; i++) {
-		
+
 		printf("  Row %3d: %3d %3d %3d %3d %3d %3d\n",i+1, current.T_Row[i][0],current.T_Row[i][1],current.T_Row[i][2],current.T_Row[i][3],current.T_Row[i][4],current.T_Row[i][5]);
 	}
-	
+
 	printf("\n===============================================================================\n\n");
-	
+
 }
- 
+
  /******************************************************************************
  * IsCorrectLotteryRow
  ******************************************************************************
  checks for valid range and duplicates                                       */
- 
+
 bool isCorrectLotteryRow(int *LotteryNo) {
 
 	int i, j; int v = 0; bool bDuplicate = false;
@@ -300,7 +300,7 @@ bool isCorrectLotteryRow(int *LotteryNo) {
 
 	return false;
 }
- 
+
  /******************************************************************************
  * IsCorrectBonusNo
  ******************************************************************************
@@ -329,7 +329,7 @@ bool isCorrectLotteryRow(int *LotteryNo) {
 
  	return false;
  }
- 
+
  /******************************************************************************
  * Convert To Digit
  ******************************************************************************
@@ -342,7 +342,7 @@ int convertToDigit( char c )
     if ( c < '0' || c > '9' ) return -1;
     return c - '0';
 }
- 
+
  /******************************************************************************
  * Get Lottery Win Class
  ******************************************************************************
@@ -374,3 +374,4 @@ int convertToDigit( char c )
          }
      }
 }
+
