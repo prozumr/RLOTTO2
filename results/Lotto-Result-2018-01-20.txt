@@ -1,0 +1,33 @@
+RLOTTO v0.6.341.1601
+Evaluating lottery results
+Lottery Ticket No: 1325852
+
+Players: Susi Sorglos
+
+Drawing Date: Saturday, 20-Jan-2018
+Lottery numbers: 2 8 23 32 37 38
+Bonus number: 11
+Super number: 9
+Game 77: 1234567
+Super 6: 123456
+
+Lottery Matches on Saturday, 20-Jan-2018
+
+Row No  1:  2  8 11 12 18 21	(no win / 2 matches)
+Row No  2: 22 25 30 33 36 42	(no win / no match)
+Row No  3: 15 20 25 30 35 40	(no win / no match)
+Row No  4:  0  0  0  0  0  0	(no win / no match)
+Row No  5:  0  0  0  0  0  0	(no win / no match)
+Row No  6:  0  0  0  0  0  0	(no win / no match)
+Row No  7:  0  0  0  0  0  0	(no win / no match)
+Row No  8:  0  0  0  0  0  0	(no win / no match)
+Row No  9:  0  0  0  0  0  0	(no win / no match)
+Row No 10:  0  0  0  0  0  0	(no win / no match)
+Row No 11:  0  0  0  0  0  0	(no win / no match)
+Row No 12:  0  0  0  0  0  0	(no win / no match)
+
+There is no win for any of 12 rows played in total.
+There is no win for Game 77.
+There is no win for Super 6.
+
+Without any warranty.

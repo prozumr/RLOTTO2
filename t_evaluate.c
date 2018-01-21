@@ -53,8 +53,8 @@ char *getWinClass(int matches, bool bonus_super );	            // returns win cl
 	evaluation. */
 
 
-	// FIXME (camelo#1#01/20/18): Adjust for new rules - remove Bonus number adjust win classed by Superzahl
-	// TODO (camelo#2#01/03/18): Implement condition to evaluate only enabled options (e.g. G77)
+	// FIXME: (camelo#1#01/20/18): Adjust for new rules - remove Bonus number adjust win classed by Superzahl
+	// TODO: (camelo#2#01/03/18): Implement condition to evaluate only enabled options (e.g. G77)
 
 int evaluateTicket(void) {
 

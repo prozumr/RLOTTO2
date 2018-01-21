@@ -1,0 +1,33 @@
+RLOTTO v0.5.293.1523
+Evaluating lottery results
+Lottery Ticket No: 3124567
+
+Players: Max Mustermann
+
+Drawing Date: Wednesday, 03-Jan-2018
+Lottery numbers: 5 17 21 33 38 42
+Bonus number: 15
+Super number: 9
+Game 77: 3698521
+Super 6: 789456
+
+Lottery Matches on Wednesday, 03-Jan-2018
+
+Row No  1: 38 40 41 42 44 47	(no win / 2 matches)
+Row No  2: 11 17 18 36 33 45	(no win / 2 matches)
+Row No  3: 19 20 30 41 46 48	(no win / no match)
+Row No  4:  0  0  0  0  0  0	(no win / no match)
+Row No  5:  0  0  0  0  0  0	(no win / no match)
+Row No  6:  0  0  0  0  0  0	(no win / no match)
+Row No  7:  0  0  0  0  0  0	(no win / no match)
+Row No  8:  0  0  0  0  0  0	(no win / no match)
+Row No  9:  0  0  0  0  0  0	(no win / no match)
+Row No 10:  0  0  0  0  0  0	(no win / no match)
+Row No 11:  0  0  0  0  0  0	(no win / no match)
+Row No 12:  0  0  0  0  0  0	(no win / no match)
+
+There is no win for any of 12 rows played in total.
+There is no win for Game 77.
+There is no win for Super 6.
+
+Without any warranty.

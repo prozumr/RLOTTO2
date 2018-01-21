@@ -1,0 +1,33 @@
+RLOTTO v0.5.293.1523
+Evaluating lottery results
+Lottery Ticket No: 1234567
+
+Players: Peter Pan
+
+Drawing Date: Saturday, 13-Jan-2018
+Lottery numbers: 2 7 21 32 26 40
+Bonus number: 12
+Super number: 3
+Game 77: 5274152
+Super 6: 357951
+
+Lottery Matches on Saturday, 13-Jan-2018
+
+Row No  1:  1  2  3  4  5  6	(no win / 1 match)
+Row No  2: 11 12 13 14 15 16	(no win / no match)
+Row No  3:  0  0  0  0  0  0	(no win / no match)
+Row No  4:  0  0  0  0  0  0	(no win / no match)
+Row No  5:  0  0  0  0  0  0	(no win / no match)
+Row No  6:  0  0  0  0  0  0	(no win / no match)
+Row No  7:  0  0  0  0  0  0	(no win / no match)
+Row No  8:  0  0  0  0  0  0	(no win / no match)
+Row No  9:  0  0  0  0  0  0	(no win / no match)
+Row No 10:  0  0  0  0  0  0	(no win / no match)
+Row No 11:  0  0  0  0  0  0	(no win / no match)
+Row No 12:  0  0  0  0  0  0	(no win / no match)
+
+There is no win for any of 12 rows played in total.
+There is no win for Game 77.
+There is no win for Super 6.
+
+Without any warranty.

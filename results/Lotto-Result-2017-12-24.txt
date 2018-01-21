@@ -1,0 +1,33 @@
+RLOTTO v0.5.293.1523
+Evaluating lottery results
+Lottery Ticket No: 0000002
+
+Players: Franz Froehlich
+
+Drawing Date: Sunday, 24-Dec-2017
+Lottery numbers: 1 2 3 4 5 6
+Bonus number: 9
+Super number: 7
+Game 77: 1234567
+Super 6: 123456
+
+Lottery Matches on Sunday, 24-Dec-2017
+
+Row No  1:  1  2  3  4  5  6	(class II / 6 matches)
+Row No  2: 11 12 13 14 15 16	(no win / no match)
+Row No  3: 21 22 23 24 25 26	(no win / no match)
+Row No  4: 31 32 33 34 35 36	(no win / no match)
+Row No  5: 41 42 43 44 45 46	(no win / no match)
+Row No  6:  1  2  3  4  5  7	(class IV / 5 Matches)
+Row No  7: 11 12 13 14 15 17	(no win / no match)
+Row No  8: 21 22 23 24 25 27	(no win / no match)
+Row No  9: 31 32 33 34 35 37	(no win / no match)
+Row No 10: 41 42 43 44 45 47	(no win / no match)
+Row No 11: 25 36 37 40 42 44	(no win / no match)
+Row No 12:  3  5 16 22 30 33	(no win / 2 matches)
+
+There are 2 rows with wins of 12 rows played in total.
+There is no win for Game 77.
+There is no win for Super 6.
+
+Without any warranty.

@@ -1,0 +1,38 @@
+TASK PLAN
+
+Task: 		create function check_ticket_validity
+Description:	Implement check for ticket validity against drawing date
+
+
+Steps:
+
+		=> Calculate end date from start date
+		=> Compare end date with drawing date
+		=> if drawing date > end date => invalid case
+		=> if drawing date < end date check for validity of week day
+		=> for permanent ticket only check validity of week day
+
+
+Method:
+
+
+You can use the difftime function:
+
+	#include <time.h>
+	#include <stdio.h>
+	int main(void) {
+	time_t date1, date2;
+	// initialize date1 and date2...
+	double seconds = difftime(date1, date2);
+	if (seconds > 0) {
+		printf("Date1 > Date2\n");
+	}
+	return 0;
+	}
+
+If your dates are not of type time_t, you can use the function mktime to convert them.
+
+Aus <https://stackoverflow.com/questions/5283120/date-comparison-to-find-which-is-bigger-in-c> 
+
+
+
