@@ -11,10 +11,10 @@
  *
  * ----------------------------------------------------------------------------
  * This file is part of RLotto.                                               */
- 
+
 
  // HEADER SECTION
- 
+
 #include <stdio.h>
 #include <stdbool.h>
 #include <stdlib.h>
@@ -29,4 +29,6 @@
 */
 int deleteTicket(void) {
 	printf("\n\nDelete existing lottery ticket.\n");
+
+	return 0;
 }

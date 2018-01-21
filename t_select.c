@@ -124,6 +124,8 @@ int selectTicket(void) {
 	// Call function for reading selected ticket
 
 	read_Ticket(ticket_no);
+
+	return 0;
 }
 
 /*	READ TICKET ****************************************************************
@@ -342,8 +344,8 @@ int selectTicket(void) {
 				evaluateTicket();
 			if(sConfirm == 'n') {
 				printf("\nReturning to main menu.\n");
-				t_initialize;
-				exit;
+				t_initialize();
+				// exit statement removed due to compiler warning (
 			}
 
 		} while(sConfirm != 'y' && sConfirm != 'n');

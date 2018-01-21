@@ -7,7 +7,7 @@
  * Author: 		Reinhard Rozumek
  * Email: 		reinhard@rozumek.de
  * Created: 	11/17/17
- * Last mod:	11/18/17
+ * Last mod:	01/19/18
  *
  * ----------------------------------------------------------------------------
  * This file is part of RLotto.                                               */
@@ -23,6 +23,10 @@
 #include <ctype.h>
 #include <time.h>
 #include "rlotto.h"
+
+/* GLOABL VARIABLES ***********************************************************/
+
+struct tm dd;			                            // date type used for d_rawing d_ate
 
 
 // FUNCTION DECLARATION
@@ -238,13 +242,6 @@ void display_Ticket(void) {
 
 	int i;
 
-	char runtime_o1[2] = "1", runtime_o2[2] = "2", runtime_o3[2] = "3",
-	runtime_o4[2] = "4", runtime_o5[2] = "5", runtime_o6[2] = "m", runtime_o7[2] = "p";
-	char weekday_o1 [2] = "s", weekday_o2 [2] = "w", weekday_o3 [2] = "b";
-	char T_G77_o1[2] = "y", T_G77_o2[2] = "n";
-	char T_SU6_o1[2] = "y", T_SU6_o2[2] = "n";
-	char T_GSP_o1[2] = "y", T_GSP_o2[2] = "n";
-
 	/* Map some structure data first to some more human readable values for display on stdout */
 
 	map_t_attributes(1);	// Runtime
@@ -375,3 +372,166 @@ int convertToDigit( char c )
      }
 }
 
+
+ /******************************************************************************
+ * IsValidDrawingDate
+ ******************************************************************************
+ Check for ticket validity against drawing date. Gets Drawing Date and returns
+ true or false by checking Ticket Start Date, Ticket Runtime and Ticket day of
+ week - all stored in the global ticket structure. In order to accomplish this,
+ the functions first needs to calculate the ticket end date. */
+
+bool isValidDrawingDate(int dd_month, int dd_day, int dd_year) {
+
+    bool result;                    // true if w_day_OK AND period_OK true. Otherwise false.
+    bool w_day_OK;                   // true if drawing day of the week matches with ticket. Otherwise false.
+    bool period_OK;                  // true if with ticket validity period. Otherwise false.
+    struct tm add;                  // date type used for a_ctual d_rawing d_ate
+    struct tm tsd;                  // date type used for t_icket s_tart d_ate
+    struct tm ted;                  // date type used for t_icket e_nd d_ate
+    int ts_day, ts_month, ts_year;  // representing year, month, day from ticket start date as integer values
+    char *str_day;                  // Token of Ticket start date for day
+    char *str_month;                // Token of Ticket start date for month
+    char *str_year;                 // Token of Ticket start date for year
+    char str_runtime;               // runtime range: 1,2,3,4,5,m_onth, p_ermanent
+    char str_d_day;                 // drawing day range: s_saturday, w_ednesday or b_oth
+    double diff_seconds1;           // time difference in seconds
+    double diff_seconds2;           // time difference in seconds
+    int dw_day;                     // drawing weekday (0,1,2,3,4,5,6)
+    char tw_day;                    // ticket week day (s, w or b)
+
+
+    result = false;
+
+
+    // build actual drawing date structure ------------------------------------
+
+    add.tm_year = dd_year - 1900;
+    add.tm_mon  = dd_month - 1;
+    add.tm_mday = dd_day;
+
+    add.tm_hour = 0;
+    add.tm_min  = 0;
+    add.tm_sec  = 1;
+    add.tm_isdst = -1;       // Change for Summer Time !?
+
+    if (mktime(&add) == -1 )
+        add.tm_wday = 7;
+
+    // build ticket start date structure --------------------------------------
+
+    str_day = strtok(current.T_Start, ".");
+    str_month = strtok(NULL, ".");
+    str_year = strtok(NULL, ".");
+
+    ts_day = atoi(str_day);
+    ts_month = atoi(str_month);
+    ts_year = atoi(str_year);
+
+    tsd.tm_year = ts_year - 1900;
+    tsd.tm_mon  = ts_month - 1;
+    tsd.tm_mday = ts_day;
+
+    tsd.tm_hour = 0;
+    tsd.tm_min  = 0;
+    tsd.tm_sec  = 1;
+    tsd.tm_isdst = -1;       // Change for Summer Time !?
+
+    if (mktime(&tsd) == -1 )
+        tsd.tm_wday = 7;
+
+    // build ticket end date structure ----------------------------------------
+
+    str_runtime = current.T_Runtime[0];
+    str_d_day = current.T_D_Day[0];
+
+    ted.tm_year = ts_year - 1900;
+    ted.tm_mon  = ts_month - 1;
+    ted.tm_mday = ts_day;
+
+    ted.tm_hour = 0;
+    ted.tm_min  = 0;
+    ted.tm_sec  = 1;
+    ted.tm_isdst = -1;       // Change for Summer Time !?
+
+    switch (str_runtime) {
+
+        case '1': ted.tm_mday +=7; mktime(&ted); break;     // 1 week = 7 days
+        case '2': ted.tm_mday +=14; mktime(&ted); break;    // 2 weeks = 14 days
+        case '3': ted.tm_mday +=21; mktime(&ted); break;    // 3 weeks = 21 days
+        case '4': ted.tm_mday +=28; mktime(&ted); break;    // 4 weeks = 28 days
+        case '5': ted.tm_mday +=35; mktime(&ted); break;    // 5 weeks = 35 days
+        case 'm': ted.tm_mon +=1; mktime(&ted); break;      // 1 month = same date next month
+        case 'p': ted.tm_year +=25; mktime(&ted); break;    // permanent = 25 years
+        default: break;
+    }
+
+
+    // Check validity ---------------------------------------------------------
+    // Condition 1: weekday 0=Sun, 1=Mon, 2=Tue, 3=Wed, 4=Thu, 5=Fri, 6=Sat
+    // Condition 2: Ticket end date is greater or equals actual drawing date
+    // Condition 3: Actual drawing date is grater or equals ticket start date
+    // Ticket has been validated against drawing date once all conditions above are evaluated true
+
+    diff_seconds1 = difftime(mktime(&add), mktime(&tsd));       // difference between actual drawing date and ticket start date
+    diff_seconds2 = difftime(mktime(&ted), mktime(&add));       // difference between ticket end date and actual drawing date
+
+    dw_day = add.tm_wday;                                       // day of the week for actual drawing date from console input
+    tw_day = current.T_D_Day[0];                                // day of the week read from ticket (w, s or b)
+
+    // Check for correct weekday (condition 1)
+
+    w_day_OK = false;
+    period_OK = false;
+
+
+    switch (tw_day) {
+
+        case 's':
+
+            if(dw_day == 6) w_day_OK = true;
+            else printf("\nDrawing date is not a Saturday. Please enter correct drawing date.\n");
+            break;
+
+        case 'w':
+
+            if(dw_day == 3) w_day_OK = true;
+            else printf("\nDrawing date is not a Wednesday. Please enter correct drawing date.\n");
+            break;
+
+        case 'b':
+
+            if(dw_day == 3 || dw_day == 6) w_day_OK = true;
+            else printf("\nDrawing date is neither Wednesday nor Saturday. Please enter correct drawing date.\n");
+            break;
+
+        default:
+
+            printf("\nDay of Week from ticket not available. \n");
+            break;
+    }
+
+
+
+    // Check for correct validity period (condition 2 & 3)
+
+    if((diff_seconds1 >= 0) && (diff_seconds2 >= 0)) period_OK = true;
+    else printf("\nActual drawing date not in rage of valid ticket period. Please enter correct drawing date.\n");
+
+    // Total result for check of validity
+
+    if(w_day_OK == true && period_OK == true) result = true;
+    else result = 0;
+
+    /* Debug
+    printf("DEBUG add: %s\n", asctime(&add));
+    printf("DEBUG tsd: %s\n", asctime(&tsd));
+    printf("DEBUG ted: %s\n", asctime(&ted));
+    printf("DEBUG diff_seconds1: %f\n", diff_seconds1);
+    printf("DEBUG diff_seconds2: %f\n", diff_seconds2);
+    printf("DEBUG dw_day: %d\n", dw_day);
+    printf("DEBUG tw_day: %c\n", tw_day); */
+
+    return result;
+
+}

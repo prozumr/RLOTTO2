@@ -11,10 +11,10 @@
  *
  * ----------------------------------------------------------------------------
  * This file is part of RLotto.                                               */
- 
+
 
  // HEADER SECTION
- 
+
 #include <stdio.h>
 #include <stdbool.h>
 #include <stdlib.h>
@@ -25,11 +25,13 @@
 
 /* CONFIGURE SETTINGS -------------------------------------------------------*/
 /* Configure settings in INI file.
-*/	
+*/
 int configureSettings(void) {
 	printf("\n\nConfigure Settings for RLotto.\n");
-	
-	
+
+
 	printf("\n\n--- UNDER CONSTRUCTION ---\n");
+
+	return 0;
 }
 

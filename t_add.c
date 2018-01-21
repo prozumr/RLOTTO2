@@ -25,7 +25,7 @@
 #include "rlotto.h"
 
 //GLOBAL VARIABLES
-struct tm tt;										// standard date type
+
 
 
 // FUNCTION DECLARATION
@@ -54,6 +54,8 @@ bool isLeapYear(const int iYear);
 
 int addTicket(void) {
 
+    // TODO (camelo#2#01/20/18): Implement condition to add only enabled data (e.g. Super6, Spiel 77 etc.)
+
 	bool is_ok = false;
 	bool first_input = true;
 	char sConfirm[2], sWrite[2];
@@ -65,7 +67,7 @@ int addTicket(void) {
     		printf("\n\nAdd new lottery ticket? (y/n): ");
     	else
     		printf("Invalid input! Please correct: ");
-    	scanf("%s", &sConfirm);
+    	scanf("%s", sConfirm);
     	fflush(stdin);
 
 		if(*sConfirm=='y' || *sConfirm=='n') {
@@ -101,7 +103,7 @@ int addTicket(void) {
 				printf("\nWrite ticket to file sytem? (y/n): ");
 			else
 				printf("Invalid input! Please correct: ");
-			scanf("%s", &sWrite);
+			scanf("%s", sWrite);
 			fflush(stdin);
 
 			if(*sWrite=='y' || *sWrite=='n') {
@@ -127,6 +129,8 @@ int addTicket(void) {
 		printf("\nCreation of new ticket canceled.\n");
 	}
 
+	return 0;
+
 }
 
 /******************************************************************************
@@ -148,7 +152,7 @@ int addTicket(void) {
     		printf("Enter 7-digit Ticket Number: ");
     	else
     		printf("Invalid input! Please correct: ");
-    	scanf("%8s", &ticket_No);							//Input limited to 7 characters
+    	scanf("%8s", ticket_No);							//Input limited to 7 characters
     	fflush(stdin);
     	is_ok = (isCorrectTicketNo(ticket_No));
     	first_input = false;
@@ -192,7 +196,7 @@ int addTicket(void) {
 
  void get_Start_Date(void) {
 
-
+    struct tm ts;				// date type for t_icket s_tart date
 
     int year, month, day;		// year, month, day as enterd by user
     bool is_ok = false;			// correctness of date format
@@ -212,21 +216,21 @@ int addTicket(void) {
 
     } while(is_ok == false);
 
-    tt.tm_year = year - 1900;
-    tt.tm_mon  = month - 1;
-    tt.tm_mday = day;
+    ts.tm_year = year - 1900;
+    ts.tm_mon  = month - 1;
+    ts.tm_mday = day;
 
-    tt.tm_hour = 0;
-    tt.tm_min  = 0;
-    tt.tm_sec  = 1;
-    tt.tm_isdst = -1;
+    ts.tm_hour = 0;
+    ts.tm_min  = 0;
+    ts.tm_sec  = 1;
+    ts.tm_isdst = -1;
 
-    if ( mktime(&tt) == -1 )
-      tt.tm_wday = 7;
+    if ( mktime(&ts) == -1 )
+      ts.tm_wday = 7;
 
-	// strftime(sPlayDate, 40, "%A, %d-%B-%Y", &tt); <----
+	// strftime(sPlayDate, 40, "%A, %d-%B-%Y", &ts); <----
 
-	strftime(sPlayDate, 11, "%d.%m.%Y", &tt);
+	strftime(sPlayDate, 11, "%d.%m.%Y", &ts);
 
 
 	strcpy(current.T_Start , sPlayDate);						// Assign ticket Start Date to structure
@@ -256,7 +260,7 @@ int addTicket(void) {
     		printf("Enter ticket runtime (1-5,m,p): ");
     	else
     		printf("Invalid input! Please correct: ");
-    	scanf("%s", &rt);
+    	scanf("%s", rt);
     	fflush(stdin);
 		if(*rt=='1' || *rt=='2' || *rt=='3' || *rt=='4' || *rt=='5' || *rt=='m' || *rt=='p' ) {
 
@@ -294,7 +298,7 @@ void get_T_D_Day(void){
     		printf("Enter ticket drawing day (s,w,b): ");
     	else
     		printf("Invalid input! Please correct: ");
-    	scanf("%s", &T_D_Day);
+    	scanf("%s", T_D_Day);
     	fflush(stdin);
 		if(*T_D_Day=='s' || *T_D_Day=='w' || *T_D_Day=='b') {
 
@@ -331,7 +335,7 @@ void get_T_G77(void){
     		printf("Enter if Game 77 is active (y,n): ");
     	else
     		printf("Invalid input! Please correct: ");
-    	scanf("%s", &T_G77);
+    	scanf("%s", T_G77);
     	fflush(stdin);
 		if(*T_G77=='y' || *T_G77=='n') {
 
@@ -368,7 +372,7 @@ void get_T_SU6(void){
     		printf("Enter if Super 6 is active (y,n): ");
     	else
     		printf("Invalid input! Please correct: ");
-    	scanf("%s", &T_SU6);
+    	scanf("%s", T_SU6);
     	fflush(stdin);
 		if(*T_SU6=='y' || *T_SU6=='n') {
 
@@ -405,7 +409,7 @@ void get_T_GSP(void){
     		printf("Enter if Glueckspirale is active (y,n): ");
     	else
     		printf("Invalid input! Please correct: ");
-    	scanf("%s", &T_GSP);
+    	scanf("%s", T_GSP);
     	fflush(stdin);
 		if(*T_GSP=='y' || *T_GSP=='n') {
 
@@ -432,7 +436,6 @@ void get_T_GSP(void){
 
 void get_T_Rows(void){
 
-	int T_Row[12] [6];			// Lottery numbers with row.
 	int T_Max_Row;				// Max number of rows used in this ticket
 	int i, j;					// Loop counter
 	int checksum;				// Checksum to validate numbers are in range of 1-49
@@ -479,8 +482,10 @@ void get_T_Rows(void){
 
 		if(first_input == true)
 			printf("Enter Lottery numbers per row separated by commas.\n");
-    	else
-    		printf("Invalid input! Please correct!\n\n");
+    	else {
+            printf("Invalid input! Please correct!\n\n");
+    	}
+
 
 		for(i = 0; i <= T_Max_Row - 1; i++) {
 
@@ -541,7 +546,7 @@ void write_Ticket(void){
 	strcat(t_full_path, current.T_No);
 	strcat(t_full_path, T_EXT);
 
-	printf("\nFull path: %s\n", &t_full_path);
+	printf("\nFull path: %s\n", t_full_path);
 
 
 	// Open file and write
@@ -550,7 +555,7 @@ void write_Ticket(void){
 
 	if(fp == NULL) {
 
-		printf("\nTicket folder missing. Try to create now...\n", TicketFolder);
+		printf("\nTicket folder missing. Try to create now...\n");
 			system("mkdir tickets");
 			pFile = fopen(t_full_path, "w");
 			if(pFile == NULL) {

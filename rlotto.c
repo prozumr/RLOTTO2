@@ -66,7 +66,7 @@ int main() {
 	welcome();													// Welcome Message
 	t_initialize();												// Initialize ticket data structure
 
-	// TODO (camelo#2#01/03/18): Implement Console attribute (Title, Color etc.) ...
+	// TODO (camelo#3#01/03/18): Implement Console attribute (Title, Color etc.) ...
 
 	/* Main Loop starts here */
 
