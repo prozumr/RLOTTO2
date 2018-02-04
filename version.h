@@ -1,3 +1,18 @@
+ /*version.h | RLotto | gcc | v0.7.348.1701
+ * Console program for storing and evaluating lottery ticket results.
+ * ----------------------------------------------------------------------------
+ *
+ * Objective:	maintain version information for source code
+ *
+ * Author: 		Reinhard Rozumek
+ * Email: 		reinhard@rozumek.de
+ * Created: 	10/08/17
+ * Last mod:	01/24/18
+ *
+ * ----------------------------------------------------------------------------
+ * This file is part of RLotto.                                               */
+
+
 #ifndef VERSION_H
 #define VERSION_H
 
@@ -7,20 +22,20 @@
 	static const char THISPROG[] = "RLOTTO";
 
 	//Software Status
-	static const char STATUS[] = "v0.6 Alpha";
-	static const char STATUS_SHORT[] = "v0.6a";
+	static const char STATUS[] = "v0.7 Alpha";
+	static const char STATUS_SHORT[] = "v0.7a";
 
 	//Standard Version Type
 	static const long MAJOR = 0;
-	static const long MINOR = 6;
-	static const long BUILD = 345;
-	static const long REVISION = 1601;
+	static const long MINOR = 7;
+	static const long BUILD = 348;
+	static const long REVISION = 1701;
 
 	//Miscellaneous Version Types
-	static const long BUILDS_COUNT = 345;
-	#define RC_FILEVERSION 0,6,345,1601
-	#define RC_FILEVERSION_STRING "0, 6, 345, 1601\0"
-	static const char FULLVERSION_STRING[] = "0.6.345.1601";
+	static const long BUILDS_COUNT = 348;
+	#define RC_FILEVERSION 0,7,348,1701
+	#define RC_FILEVERSION_STRING "0, 7, 348, 1701\0"
+	static const char FULLVERSION_STRING[] = "0.7.348.1701";
 
 	//These values are to keep track of your versioning state, don't modify them.
 	static const long BUILD_HISTORY = 29;

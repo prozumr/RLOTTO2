@@ -1,4 +1,4 @@
- /*rlotto.h | RLotto | gcc | v0.0.3.0
+ /*rlotto.h | RLotto | gcc | v0.7.348.1701
  * Console program for storing and evaluating lottery ticket results.
  * ----------------------------------------------------------------------------
  *
@@ -7,7 +7,7 @@
  * Author: 		Reinhard Rozumek
  * Email: 		reinhard@rozumek.de
  * Created: 	10/08/17
- * Last mod:	11/18/17
+ * Last mod:	01/26/18
  *
  * ----------------------------------------------------------------------------
  * This file is part of RLotto.
@@ -32,16 +32,12 @@
 #define RLOTTO_H
 #define N 80
 #define NOLR 12															// N_umber O_f L_ottery R_ows -1 (First Row with index 0)
- 
+
  /* GLOBAL VARIABLES */
 bool go_Exit;
 struct date { short month, day, year; };								// not used !? => check
 
-/*static const char THISPROG[] = "LOTTOCHECK";							// Program Name
-char cTicketNo[8] = "2649458";											// Ticket Number
-char cPlayers[128] = "Bodo, Jan, Marek, Nicole, Pieter, Reinhard";		// Players*/
 extern int ALN[6];														// Actual Lottery Numbers
-extern int ABN;															// Actual Bonus Number
 extern int ASN;															// Actual Super Number
 extern char cG77[8];													// Actual Game 77 Number
 extern char cSU6[7];													// Actual Super 6 Number

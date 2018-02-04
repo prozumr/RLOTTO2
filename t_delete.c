@@ -1,4 +1,4 @@
- /*t_delete.c | RLotto | gcc | v0.0.3.0
+ /*t_delete.c | RLotto | gcc | v0.7.348.1701
  * Console program for storing and evaluating lottery ticket results.
  * ----------------------------------------------------------------------------
  *

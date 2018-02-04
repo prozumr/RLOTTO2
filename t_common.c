@@ -1,4 +1,4 @@
- /*t_common.c | RLotto | gcc | v0.0.3.0
+ /*t_common.c | RLotto | gcc | v0.7.348.1701
  * Console program for storing and evaluating lottery ticket results.
  * ----------------------------------------------------------------------------
  *
@@ -7,7 +7,7 @@
  * Author: 		Reinhard Rozumek
  * Email: 		reinhard@rozumek.de
  * Created: 	11/17/17
- * Last mod:	01/19/18
+ * Last mod:	02/04/18
  *
  * ----------------------------------------------------------------------------
  * This file is part of RLotto.                                               */
@@ -299,35 +299,6 @@ bool isCorrectLotteryRow(int *LotteryNo) {
 }
 
  /******************************************************************************
- * IsCorrectBonusNo
- ******************************************************************************
- prevent bonus number already exists as actual lottery number                */
-
- bool isCorrectBonusNo(int BN, int *LoNo) {
-
- 	int i;
- 	bool bDuplicate = false;
- 	bool bValidRange = false;
-
- 	// checks valid range ff
- 	if(BN > 0 && BN < 50)
- 		bValidRange = true;
-
- 	// checks if BN already exists as acual lottery number
-
- 	for(i = 0; i < 6; i++) {
-
-		if(LoNo[i] == BN)
-			bDuplicate = true;
-	}
-
- 	if((bValidRange == true) && (bDuplicate == false))
- 		return true;
-
- 	return false;
- }
-
- /******************************************************************************
  * Convert To Digit
  ******************************************************************************
  converts single char in range of '1' to '9' to number.                       */
@@ -343,15 +314,18 @@ int convertToDigit( char c )
  /******************************************************************************
  * Get Lottery Win Class
  ******************************************************************************
- Function gets number of lottery matches and bonus or super number and
- returns lottery win class.                                                  */
+ Function gets number of lottery matches per row and result from check of super
+ super number per ticket. The fuction returns the lottery win class.          */
 
- char *getWinClass(int matches, bool bonus_super ) {
+ char *getWinClass(int matches, bool super ) {
 
-     if(bonus_super == false) {
+     if(super == false) {
 
          switch(matches) {
-
+			 
+			 case 0: return "no win"; break;
+			 case 1: return "no win"; break;
+			 case 2: return "no win"; break;
              case 3: return "class VIII"; break;
              case 4: return "class VI"; break;
              case 5: return "class IV"; break;
@@ -363,6 +337,9 @@ int convertToDigit( char c )
 
          switch(matches) {
 
+             case 0: return "no win"; break;
+			 case 1: return "no win"; break;
+			 case 2: return "class IX"; break;
              case 3: return "class VII"; break;
              case 4: return "class V"; break;
              case 5: return "class III"; break;
@@ -394,7 +371,7 @@ bool isValidDrawingDate(int dd_month, int dd_day, int dd_year) {
     char *str_month;                // Token of Ticket start date for month
     char *str_year;                 // Token of Ticket start date for year
     char str_runtime;               // runtime range: 1,2,3,4,5,m_onth, p_ermanent
-    char str_d_day;                 // drawing day range: s_saturday, w_ednesday or b_oth
+    /* char str_d_day;              drawing day range: s_saturday, w_ednesday or b_oth*/
     double diff_seconds1;           // time difference in seconds
     double diff_seconds2;           // time difference in seconds
     int dw_day;                     // drawing weekday (0,1,2,3,4,5,6)
@@ -443,7 +420,7 @@ bool isValidDrawingDate(int dd_month, int dd_day, int dd_year) {
     // build ticket end date structure ----------------------------------------
 
     str_runtime = current.T_Runtime[0];
-    str_d_day = current.T_D_Day[0];
+    //str_d_day = current.T_D_Day[0];
 
     ted.tm_year = ts_year - 1900;
     ted.tm_mon  = ts_month - 1;

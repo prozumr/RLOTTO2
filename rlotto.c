@@ -1,4 +1,4 @@
- /*rlotto.c | RLotto | gcc | v0.0.3.0
+ /*rlotto.c | RLotto | gcc | v0.7.348.1701
  * Console program for storing and evaluating lottery ticket results.
  * ----------------------------------------------------------------------------
  *
@@ -42,7 +42,6 @@
 /* GLOBAL VARIABLES **********************************************************/
 
 int ALN[6];											// Actual Lottery Numbers
-int ABN = 0;										// Actual Bonus Number
 int ASN = -1;										// Actual Super Number
 char cG77[8];										// Actual Game 77 Number
 char cSU6[7];										// Actual Super 6 Number
