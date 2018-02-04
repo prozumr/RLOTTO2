@@ -7,7 +7,7 @@
  * Author: 		Reinhard Rozumek
  * Email: 		reinhard@rozumek.de
  * Created: 	10/08/17
- * Last mod:	01/24/18
+ * Last mod:	02/04/18
  *
  * ----------------------------------------------------------------------------
  * This file is part of RLotto.                                               */
