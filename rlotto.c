@@ -39,6 +39,9 @@
 #include "rlotto.h"
 #include "version.h"
 
+
+
+
 /* GLOBAL VARIABLES **********************************************************/
 
 int ALN[6];											// Actual Lottery Numbers
@@ -49,6 +52,15 @@ char TicketFolder[13] = ".\\tickets\\";				// Folder to store results
 char ResultFolder[13] = ".\\results\\";				// Folder to store results
 FILE *pFile = NULL;									// Pointer to result file
 
+/* Global Functions **********************************************************/
+
+int lgetche(void) 
+{  
+    system("stty raw");//setting the terminal in raw mode
+    char ch=getchar();
+    system("stty cooked");
+    return(ch);
+}
 
 /******************************************************************************
  * MAIN
@@ -82,7 +94,7 @@ int main() {
 		do {
 
 			printf("\nPlease select (1-5): ");
-			iSelect =(getche());
+            iSelect =(mygetc());
 			fflush(stdin);
 
          } while(iSelect < 49 || iSelect > 53);
