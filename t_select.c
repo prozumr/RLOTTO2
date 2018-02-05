@@ -337,7 +337,7 @@ int selectTicket(void) {
 		printf("Evaluate this ticket now? [y/n]: ");
 
 		do {
-			sConfirm = tolower(getche());
+			sConfirm = tolower(mygetc());
 			if(sConfirm != 'y' && sConfirm != 'n')
 				printf("\nEnter \"y\" or \"n\"\n");
 			if(sConfirm == 'y')

@@ -94,4 +94,12 @@ struct ticket {
 	char display_GSP[4];							// range: yes,no
 
 
+
+#ifdef __linux__ 
+    extern int lgetche(void);
+#   define mygetc lgetche
+#else
+#   define mygetc getche
+#endif
+
 #endif // TICKET_H_INCLUDED
