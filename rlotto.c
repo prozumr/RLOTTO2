@@ -52,6 +52,8 @@ char TicketFolder[13] = ".\\tickets\\";				// Folder to store results
 char ResultFolder[13] = ".\\results\\";				// Folder to store results
 FILE *pFile = NULL;									// Pointer to result file
 
+/* Global Functions **********************************************************/
+
 int lgetche(void) 
 {  
     system("stty raw");//setting the terminal in raw mode
