@@ -1,4 +1,4 @@
- /*rlotto.h | RLotto | gcc | v0.7.348.1701
+ /*rlotto.h | RLotto | gcc | v0.8.351.1707
  * Console program for storing and evaluating lottery ticket results.
  * ----------------------------------------------------------------------------
  *
@@ -7,7 +7,7 @@
  * Author: 		Reinhard Rozumek
  * Email: 		reinhard@rozumek.de
  * Created: 	10/08/17
- * Last mod:	01/26/18
+ * Last mod:	02/05/18
  *
  * ----------------------------------------------------------------------------
  * This file is part of RLotto.
@@ -23,7 +23,7 @@
  * GNU General Public License for more details.
  * 
  * You should have received a copy of the GNU General Public License
- * along with Tyche I. If not, see <http://www.gnu.org/licenses/>.
+ * along with RLOTTO2. If not, see <http://www.gnu.org/licenses/>.
  */
 
 

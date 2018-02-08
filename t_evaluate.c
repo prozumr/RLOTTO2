@@ -1,4 +1,4 @@
- /*t_evaluate.c | RLotto | gcc | v0.7.348.1701
+ /*t_evaluate.c | RLotto | gcc | v0.8.351.1707
  * Console program for storing and evaluating lottery ticket resultt.
  * ----------------------------------------------------------------------------
  *
@@ -7,7 +7,7 @@
  * Author: 		Reinhard Rozumek
  * Email: 		reinhard@rozumek.de
  * Created: 	10/08/17
- * Last mod:	02/04/18
+ * Last mod:	02/09/18
  *
  * ----------------------------------------------------------------------------
  * This file is part of RLotto.                                               */
@@ -224,33 +224,39 @@ int enterInput() {
 
  	// Actual Game 77 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
- 	do {
- 		if(first_input == true)
- 			printf("Enter actual Game 77 number: ");
- 		else
- 			printf("Invalid input! Please correct: ");
- 		scanf("%7[0123456789]", cG77);
- 		fflush(stdin);
- 		first_input = false;
+ 	if(current.T_G77[0] == 'y' ){
 
- 	} while((strlen(cG77)) < 7);
+		 do {
+ 			if(first_input == true)
+ 				printf("Enter actual Game 77 number: ");
+ 			else
+ 				printf("Invalid input! Please correct: ");
+ 			scanf("%7[0123456789]", cG77);
+ 			fflush(stdin);
+ 			first_input = false;
 
- 	first_input = true;	// reset to true for next evaluation
+ 		} while((strlen(cG77)) < 7);
 
+ 		first_input = true;	// reset to true for next evaluation
+	 }
+	 
  	// Actual Super 6 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
- 	do {
- 		if(first_input == true)
- 			printf("Enter actual Super 6 number: ");
- 		else
- 			printf("Invalid input! Please correct: ");
+	if(current.T_SU6[0] == 'y'){
+
+		do {
+ 			if(first_input == true)
+ 				printf("Enter actual Super 6 number: ");
+ 			else
+ 				printf("Invalid input! Please correct: ");
  		scanf("%6[0123456789]", cSU6);
  		fflush(stdin);
  		first_input = false;
 
- 	} while((strlen(cSU6)) < 6);
+ 		} while((strlen(cSU6)) < 6);
 
- 	first_input = true;	// reset to true for next evaluation
+ 		first_input = true;	// reset to true for next evaluation
+	}
 
  	// Actual Glueckspirale '''''''''''''''''''''''''''''''''''''''''''''''''''
 
@@ -265,9 +271,14 @@ int enterInput() {
     printf("\nDrawing Date: %s\n", sDrwDate);
  	printf("Actual lottery numbers: %i %i %i %i %i %i\n",ALN[0],ALN[1],ALN[2],ALN[3],ALN[4],ALN[5]);
  	printf("Actual super number: %i\n", ASN);
- 	printf("Actual Game 77: %s\n", cG77);
- 	printf("Actual Super 6: %s\n", cSU6);
-
+ 	if(current.T_G77[0] == 'y')
+		printf("Actual Game 77: %s\n", cG77);
+	else
+		printf("Actual Game 77: N/A\n");
+	if(current.T_SU6[0] == 'y')
+ 		printf("Actual Super 6: %s\n", cSU6);
+	else
+		printf("Actual Super 6: N/A\n");
  	return 0;
 
 }
@@ -385,41 +396,49 @@ int enterInput() {
  	int MatchG77 = 0;							// matches Game 77
  	char WinClassG77[4];                        // Game 77 win class
 
-    for(ii = 6; ii >= 0; ii--) {
-        if(current.T_No[ii] == cG77[ii])
-            MatchG77++;
-        else
+
+	if(current.T_G77[0] == 'y' ){
+
+		for(ii = 6; ii >= 0; ii--) {
+        	if(current.T_No[ii] == cG77[ii])
+            	MatchG77++;
+        	else
             break;
-    }
+    	}	
 
-    if(MatchG77 > 0) {
-        switch(MatchG77) {
+    	if(MatchG77 > 0) {
+        	switch(MatchG77) {
 
-            case 1: strcpy(WinClassG77, "VII"); break;
-            case 2: strcpy(WinClassG77, "VI"); break;
-            case 3: strcpy(WinClassG77, "V"); break;
-            case 4: strcpy(WinClassG77, "IV"); break;
-            case 5: strcpy(WinClassG77, "III"); break;
-            case 6: strcpy(WinClassG77, "II"); break;
-            case 7: strcpy(WinClassG77, "I"); break;
-            default: strcpy(WinClassG77, "---");
-        }
+				case 1: strcpy(WinClassG77, "VII"); break;
+				case 2: strcpy(WinClassG77, "VI"); break;
+				case 3: strcpy(WinClassG77, "V"); break;
+				case 4: strcpy(WinClassG77, "IV"); break;
+				case 5: strcpy(WinClassG77, "III"); break;
+				case 6: strcpy(WinClassG77, "II"); break;
+				case 7: strcpy(WinClassG77, "I"); break;
+				default: strcpy(WinClassG77, "---");
+        	}
 
-        if(MatchG77 == 1) {
-            printf("You have won Game 77 according winning class %s (%i digit matching).\n",WinClassG77,MatchG77);
-            fprintf(pFile, "You have won Game 77 according winning class %s (%i digit matching).\n",WinClassG77,MatchG77);
-        }
+			if(MatchG77 == 1) {
+				printf("You have won Game 77 according winning class %s (%i digit matching).\n",WinClassG77,MatchG77);
+				fprintf(pFile, "You have won Game 77 according winning class %s (%i digit matching).\n",WinClassG77,MatchG77);
+			}
 
-        if(MatchG77 > 1) {
-            printf("You have won Game 77 according winning class %s (%i digits matching).\n",WinClassG77,MatchG77);
-            fprintf(pFile, "You have won Game 77 according winning class %s (%i digits matching).\n",WinClassG77,MatchG77);
-        }
+			if(MatchG77 > 1) {
+				printf("You have won Game 77 according winning class %s (%i digits matching).\n",WinClassG77,MatchG77);
+				fprintf(pFile, "You have won Game 77 according winning class %s (%i digits matching).\n",WinClassG77,MatchG77);
+			}
 
-    } else {
-        printf("There is no win for Game 77.\n");
-        fprintf(pFile, "There is no win for Game 77.\n");
+		} else {
+			printf("There is no win for Game 77.\n");
+			fprintf(pFile, "There is no win for Game 77.\n");
 
-    }
+    	}
+	} else {
+
+		printf("Game 77 is not appicable for this ticket.\n");
+		fprintf(pFile, "Game 77 is not appicable for this ticket.\n");
+	}
 
  	return 0;
 }
@@ -438,43 +457,51 @@ int enterInput() {
  	int MatchSU6 = 0;							// matches Super 6
  	char WinClassSU6[4];                        // Game 77 win class
 
-    for(ii = 6; ii >= 0; ii--) {
+    if(current.T_SU6[0] == 'y'){
+
+		for(ii = 6; ii >= 0; ii--) {
         if(current.T_No[ii] == cSU6[ii -1])
             MatchSU6++;
         else
             break;
     }
 
-    if(MatchSU6 > 0) {
-        switch(MatchSU6) {
+		if(MatchSU6 > 0) {
+			switch(MatchSU6) {
 
-            case 1: strcpy(WinClassSU6, "VI"); break;
-            case 2: strcpy(WinClassSU6, "V"); break;
-            case 3: strcpy(WinClassSU6, "IV"); break;
-            case 4: strcpy(WinClassSU6, "III"); break;
-            case 5: strcpy(WinClassSU6, "II"); break;
-            case 6: strcpy(WinClassSU6, "I"); break;
-            default: strcpy(WinClassSU6, "---");
-        }
+				case 1: strcpy(WinClassSU6, "VI"); break;
+				case 2: strcpy(WinClassSU6, "V"); break;
+				case 3: strcpy(WinClassSU6, "IV"); break;
+				case 4: strcpy(WinClassSU6, "III"); break;
+				case 5: strcpy(WinClassSU6, "II"); break;
+				case 6: strcpy(WinClassSU6, "I"); break;
+				default: strcpy(WinClassSU6, "---");
+			}
 
 
-        if(MatchSU6 == 1) {
-            printf("You have won Super 6 according winning class %s (%i digit matching).\n",WinClassSU6,MatchSU6);
-            fprintf(pFile, "You have won Super 6 according winning class %s (%i digit matching).\n",WinClassSU6,MatchSU6);
-        }
+			if(MatchSU6 == 1) {
+				printf("You have won Super 6 according winning class %s (%i digit matching).\n",WinClassSU6,MatchSU6);
+				fprintf(pFile, "You have won Super 6 according winning class %s (%i digit matching).\n",WinClassSU6,MatchSU6);
+			}
 
-        if(MatchSU6 > 1) {
-            printf("You have won Super 6 according winning class %s (%i digits matching).\n",WinClassSU6,MatchSU6);
-            fprintf(pFile, "You have won Super 6 according winning class %s (%i digits matching).\n",WinClassSU6,MatchSU6);
+			if(MatchSU6 > 1) {
+				printf("You have won Super 6 according winning class %s (%i digits matching).\n",WinClassSU6,MatchSU6);
+				fprintf(pFile, "You have won Super 6 according winning class %s (%i digits matching).\n",WinClassSU6,MatchSU6);
 
-        }
+			}
 
-    } else {
-        printf("There is no win for Super 6.\n");
-        fprintf(pFile, "There is no win for Super 6.\n");
+		} else {
+			printf("There is no win for Super 6.\n");
+			fprintf(pFile, "There is no win for Super 6.\n");
 
-    }
+    	}
+	} else {
 
+		printf("Super 6 is not appicable for this ticket.\n");
+		fprintf(pFile, "Super 6 is not appicable for this ticket.\n");
+
+	}
+	
  	return 0;
 }
 

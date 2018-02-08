@@ -1,4 +1,4 @@
- /*version.h | RLotto | gcc | v0.7.348.1701
+ /*version.h | RLotto | gcc | v0.8.351.1707
  * Console program for storing and evaluating lottery ticket results.
  * ----------------------------------------------------------------------------
  *
@@ -22,20 +22,20 @@
 	static const char THISPROG[] = "RLOTTO";
 
 	//Software Status
-	static const char STATUS[] = "v0.7 Alpha";
-	static const char STATUS_SHORT[] = "v0.7a";
+	static const char STATUS[] = "v0.8 Alpha";
+	static const char STATUS_SHORT[] = "v0.8a";
 
 	//Standard Version Type
 	static const long MAJOR = 0;
-	static const long MINOR = 7;
-	static const long BUILD = 348;
-	static const long REVISION = 1701;
+	static const long MINOR = 8;
+	static const long BUILD = 351;
+	static const long REVISION = 1707;
 
 	//Miscellaneous Version Types
-	static const long BUILDS_COUNT = 348;
-	#define RC_FILEVERSION 0,7,348,1701
-	#define RC_FILEVERSION_STRING "0, 7, 348, 1701\0"
-	static const char FULLVERSION_STRING[] = "0.7.348.1701";
+	static const long BUILDS_COUNT = 351;
+	#define RC_FILEVERSION 0,8,351,1707
+	#define RC_FILEVERSION_STRING "0, 8, 351, 1707\0"
+	static const char FULLVERSION_STRING[] = "0.8.351.1707";
 
 	//These values are to keep track of your versioning state, don't modify them.
 	static const long BUILD_HISTORY = 29;
