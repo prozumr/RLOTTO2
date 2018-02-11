@@ -1,4 +1,4 @@
- /*t_evaluate.c | RLotto | gcc | v0.8.351.1707
+ /*t_evaluate.c | RLotto | gcc | v0.8.353.1712
  * Console program for storing and evaluating lottery ticket resultt.
  * ----------------------------------------------------------------------------
  *
@@ -7,7 +7,7 @@
  * Author: 		Reinhard Rozumek
  * Email: 		reinhard@rozumek.de
  * Created: 	10/08/17
- * Last mod:	02/09/18
+ * Last mod:	02/11/18
  *
  * ----------------------------------------------------------------------------
  * This file is part of RLotto.                                               */
@@ -78,8 +78,8 @@ int evaluateTicket(void) {
 	if(sConfirm == 'y') {
 
 		// Create Filename
-		strftime(sDrwDate, N, "%Y-%m-%d", &dd); strcpy(sPath, ResultFolder);
-		strcat(sPath, sPrefix); strcat(sPath, sDrwDate); strcat(sPath, sPostfix);
+		strftime(sDrwDate, N, "%Y-%m-%d", &dd); strcpy(sPath, ResultFolder); strcat(sPath, sPrefix);
+		 strcat(sPath, current.T_No); strcat(sPath, "-"); strcat(sPath, sDrwDate); strcat(sPath, sPostfix);
 
 		// Open result file for output
 		pFile = fopen(sPath, "w");
@@ -177,8 +177,6 @@ int enterInput() {
 
 
     	first_input = false;
-
-    	// printf("DEBUG: date_format_ok = %d | date_range_ok = %d\n", date_format_ok, date_range_ok);
 
     }
 
@@ -299,7 +297,7 @@ int enterInput() {
  	int WinRows = 0;                            // number of lottery rows with win
  	bool CSN;                                   // indicates correct super number matching last digit of the ticket number
  	char sDrwDate[N];			                // Drawing date formated
- 	int iNOLR = NOLR;                           // Number of lottery rows (hard coded)
+ 	int iNOLR = current.T_Max_Row;              // Number of lottery rows active on the ticket
  	char WinMsg[12];                            // literal to show win class for ouput
 
  	// Initialize MPR and CSN
@@ -336,6 +334,9 @@ int enterInput() {
 
         strcpy(WinMsg, getWinClass(MPR[RowNo], CSN));
 
+		if(strcmp(WinMsg, "no win") != 0)
+			WinRows++; //counting number of rows with win
+
         switch(MPR[RowNo]) {
 
             case 0:
@@ -362,21 +363,28 @@ int enterInput() {
 
     switch(WinRows) {
 
-        // FIXME (camelo#3#01/20/18): %row in total not matching count of rows actually played - Needs to be corrected.
-
         case 0: {
-            printf("\nThere is no win for any of %i rows played in total.\n",iNOLR);
-            fprintf(pFile, "\nThere is no win for any of %i rows played in total.\n",iNOLR);
+            if(iNOLR == 1) {
+				printf("\nThere is no win for any of %i row played in total.\n",iNOLR);
+				fprintf(pFile, "\nThere is no win for any of %i row played in total.\n",iNOLR);
+			} else {
+				printf("\nThere is no win for any of %i rows played in total.\n",iNOLR);
+				fprintf(pFile, "\nThere is no win for any of %i rows played in total.\n",iNOLR);
+			}
             break;
         }
         case 1: {
-            printf("\nThere is %i row with win of %i rows played in total.\n",WinRows,iNOLR);
-            fprintf(pFile, "\nThere is %i row with win of %i rows played in total.\n",WinRows,iNOLR);
+            if(iNOLR == 1) {
+				printf("\nThere is %i row with win of %i row played in total.\n",WinRows,iNOLR);
+            	fprintf(pFile, "\nThere is %i row with win of %i row played in total.\n",WinRows,iNOLR);
+			} else {
+				printf("\nThere is %i row with win of %i rows played in total.\n",WinRows,iNOLR);
+            	fprintf(pFile, "\nThere is %i row with win of %i rows played in total.\n",WinRows,iNOLR);
+			}
             break;
         }
         default: {
-            printf("\nThere are %i rows with wins of %i rows played in total.\n",WinRows,iNOLR);
-            fprintf(pFile, "\nThere are %i rows with wins of %i rows played in total.\n",WinRows,iNOLR);
+            printf("\nThere are %i rows with wins of %i row(s) played in total.\n",WinRows,iNOLR);
         }
     }
 

@@ -1,4 +1,4 @@
- /*rlotto.c | RLotto | gcc | v0.8.351.1707
+ /*rlotto.c | RLotto | gcc | v0.8.353.1712
  * Console program for storing and evaluating lottery ticket results.
  * ----------------------------------------------------------------------------
  *
@@ -7,7 +7,7 @@
  * Author: 		Reinhard Rozumek
  * Email: 		reinhard@rozumek.de
  * Created: 	09/23/17
- * Last mod:	12/31/17
+ * Last mod:	02/11/17
  *
  * ----------------------------------------------------------------------------
  * This file is part of RLotto.
@@ -54,6 +54,7 @@ FILE *pFile = NULL;									// Pointer to result file
 
 /* Global Functions **********************************************************/
 
+#ifdef __linux__ 
 int lgetche(void) 
 {  
     system("stty raw");//setting the terminal in raw mode
@@ -61,6 +62,7 @@ int lgetche(void)
     system("stty cooked");
     return(ch);
 }
+#endif
 
 /******************************************************************************
  * MAIN

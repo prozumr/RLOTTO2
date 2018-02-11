@@ -1,4 +1,4 @@
- /*rlotto.h | RLotto | gcc | v0.8.351.1707
+ /*rlotto.h | RLotto | gcc | v0.8.353.1712
  * Console program for storing and evaluating lottery ticket results.
  * ----------------------------------------------------------------------------
  *
