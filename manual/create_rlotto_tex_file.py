@@ -11,7 +11,7 @@ now = datetime.datetime.now()
 parser = argparse.ArgumentParser(description='Create PDF manual from source code')
 parser.add_argument('--header',     help='*.h files', required=True)
 parser.add_argument('--csource',     help='*.c files', required=True)
-parser.add_argument('--python',     help='*.c files', required=False)
+parser.add_argument('--python',     help='*.py files', required=False)
 
 args = parser.parse_args()
 
