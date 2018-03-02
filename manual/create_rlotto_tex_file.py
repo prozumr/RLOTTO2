@@ -1,9 +1,14 @@
 #!/usr/bin/python
+# read the *.c, *.h and *.py files from RLOTTO project and
+# create a nice, beautified PDF document with it.
+# The output of this script further processed by lualatex
+
 import argparse
 
 parser = argparse.ArgumentParser(description='Create PDF manual from source code')
 parser.add_argument('--header',     help='*.h files', required=True)
 parser.add_argument('--csource',     help='*.c files', required=True)
+parser.add_argument('--python',     help='*.c files', required=False)
 
 args = parser.parse_args()
 
@@ -46,13 +51,19 @@ for f in args.header.split(" "):
 		print("\\inputminted{C}{../" + f + "}\\newpage")
 
 # output *.c
-print("\\section{C Sourcecode}")
+print("\\section{Sourcecode}")
 for f in args.csource.split(" "):
 	if f: 
 		t = f.replace("_","\\_")
 		print("\\subsection*{\\texttt{" + t + "}}")
 		print("\\addcontentsline{toc}{subsection}{\\texttt{" + t + "}}")
 		print("\\inputminted{C}{../" + f + "}\\newpage")
+
+if args.python:
+	t = args.python.replace("_","\\_")
+	print("\\subsection*{\\texttt{" + t + "}}")
+	print("\\addcontentsline{toc}{subsection}{\\texttt{" + t + "}}")		
+	print("\\inputminted{python}{" + args.python + "}\\newpage")
 
 
 # example ticket
