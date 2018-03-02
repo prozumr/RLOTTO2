@@ -25,7 +25,7 @@ manual:
 		--header  "$(HEADER)"   \
 		--csource "$(CFILES)"   \
 		--python  "$(PYTHON)"   \
-		> $(RLOTTOTEX);                \
+		> $(RLOTTOTEX);         \
 	$(LATEX) $(LATEXOPT) $(RLOTTOTEX); \
 	$(LATEX) $(LATEXOPT) $(RLOTTOTEX) 
 
