@@ -4,6 +4,9 @@
 # The output of this script further processed by lualatex
 
 import argparse
+import datetime
+now = datetime.datetime.now()
+
 
 parser = argparse.ArgumentParser(description='Create PDF manual from source code')
 parser.add_argument('--header',     help='*.h files', required=True)
@@ -12,7 +15,7 @@ parser.add_argument('--python',     help='*.c files', required=False)
 
 args = parser.parse_args()
 
-LATEXTSTART="""\\documentclass[a4paper,10pt]{scrartcl}
+LATEX1="""\\documentclass[a4paper,10pt]{scrartcl}
 \\KOMAoptions{DIV=12}
 \\parindent=0pt
 \\usepackage{minted}	
@@ -30,12 +33,18 @@ colorlinks=false}
 \\definecolor{gray}{rgb}{0.5,0.5,0.5}
 \\definecolor{mauve}{rgb}{0.58,0,0.82}
 \\begin{document}
-\\underline{\\Large{\\textbf{RLOTTO Code Manual}}}
-\\bigskip
+\\underline{\\Large{\\textbf{RLOTTO Code Manual}}}\\newline
+"""
+
+LATEX2="""\\bigskip
 \\tableofcontents
 """
 
-print(LATEXTSTART)
+print(LATEX1)
+print(str(now))
+print(LATEX2)
+
+
 
 #output Makefile
 print("\\newpage\\section{{Makefile}}")
