@@ -8,10 +8,15 @@ import datetime
 now = datetime.datetime.now()
 
 
-parser = argparse.ArgumentParser(description='Create PDF manual from source code')
-parser.add_argument('--header',     help='*.h files', required=True)
-parser.add_argument('--csource',     help='*.c files', required=True)
-parser.add_argument('--python',     help='*.py files', required=False)
+parser = argparse.ArgumentParser(description="""Create PDF manual from source code.
+Read the *.c, *.h and *.py files from RLOTTO project and
+create a nice, beautified PDF document with it.
+The output of this script further processed by lualatex
+""")
+parser.add_argument('--header',  help='quoted, space separated list of *.h files',  required=True)
+parser.add_argument('--csource', help='quoted, space separated list of *.c files',  required=True)
+parser.add_argument('--python',  help='quoted, space separated list of *.py files', required=False)
+
 
 args = parser.parse_args()
 
@@ -33,7 +38,8 @@ colorlinks=false}
 \\definecolor{gray}{rgb}{0.5,0.5,0.5}
 \\definecolor{mauve}{rgb}{0.58,0,0.82}
 \\begin{document}
-\\underline{\\Large{\\textbf{RLOTTO Code Manual}}}\\newline
+{\\Huge{\\textbf{RLOTTO Code Manual}}}
+\\newline
 """
 
 LATEX2="""\\bigskip
@@ -41,7 +47,7 @@ LATEX2="""\\bigskip
 """
 
 print(LATEX1)
-print(str(now))
+print("\\texttt{" + str(now) + "}")
 print(LATEX2)
 
 
