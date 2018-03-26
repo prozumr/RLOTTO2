@@ -1,4 +1,4 @@
- /*t_evaluate.c | RLotto | gcc | v0.8.354.1715
+ /*t_evaluate.c | RLotto | gcc | v0.8.355.1720
  * Console program for storing and evaluating lottery ticket resultt.
  * ----------------------------------------------------------------------------
  *
@@ -138,7 +138,7 @@ int enterInput() {
  	// Actual Play Date (drawing date) ''''''''''''''''''''''''''''''''''''''''
 
     int year, month, day;		    // year, month, day as enterd by user
-    bool is_ok = false;             //
+    bool is_ok = false;             // indicating correctness of entered lottery numbers
     bool date_format_ok = false;    // correctness of drawing date format
     bool date_range_ok = false;     // validity of drawing date related to ticket
     char sPlayDate[40];			    // Actual Drawing Date
@@ -173,8 +173,6 @@ int enterInput() {
 
     	date_format_ok = isCorrectDateFormat(month, day, year);
     	date_range_ok = isValidDrawingDate(month, day, year);
-
-
 
     	first_input = false;
 

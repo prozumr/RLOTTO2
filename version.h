@@ -1,4 +1,4 @@
- /*version.h | RLotto | gcc | v0.8.354.1715
+ /*version.h | RLotto | gcc | v0.8.355.1720
  * Console program for storing and evaluating lottery ticket results.
  * ----------------------------------------------------------------------------
  *
@@ -7,7 +7,7 @@
  * Author: 		Reinhard Rozumek
  * Email: 		reinhard@rozumek.de
  * Created: 	10/08/17
- * Last mod:	02/11/18
+ * Last mod:	03/26/18
  *
  * ----------------------------------------------------------------------------
  * This file is part of RLotto.                                               */
@@ -28,14 +28,14 @@
 	//Standard Version Type
 	static const long MAJOR = 0;
 	static const long MINOR = 8;
-	static const long BUILD = 354;
-	static const long REVISION = 1715;
+	static const long BUILD = 355;
+	static const long REVISION = 1720;
 
 	//Miscellaneous Version Types
-	static const long BUILDS_COUNT = 354;
-	#define RC_FILEVERSION 0,8,353,1715
-	#define RC_FILEVERSION_STRING "0, 8, 354, 1715\0"
-	static const char FULLVERSION_STRING[] = "0.8.354.1715";
+	static const long BUILDS_COUNT = 355;
+	#define RC_FILEVERSION 0,8,353,1720
+	#define RC_FILEVERSION_STRING "0, 8, 355, 1720\0"
+	static const char FULLVERSION_STRING[] = "0.8.355.1720";
 
 	//These values are to keep track of your versioning state, don't modify them.
 	static const long BUILD_HISTORY = 29;

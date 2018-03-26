@@ -1,4 +1,4 @@
- /*t_common.c | RLotto | gcc | v0.8.354.1715
+ /*t_common.c | RLotto | gcc | v0.8.355.1720
  * Console program for storing and evaluating lottery ticket results.
  * ----------------------------------------------------------------------------
  *
@@ -7,7 +7,7 @@
  * Author: 		Reinhard Rozumek
  * Email: 		reinhard@rozumek.de
  * Created: 	11/17/17
- * Last mod:	02/04/18
+ * Last mod:	03/26/18
  *
  * ----------------------------------------------------------------------------
  * This file is part of RLotto.                                               */
@@ -361,8 +361,8 @@ int convertToDigit( char c )
 bool isValidDrawingDate(int dd_month, int dd_day, int dd_year) {
 
     bool result;                    // true if w_day_OK AND period_OK true. Otherwise false.
-    bool w_day_OK;                   // true if drawing day of the week matches with ticket. Otherwise false.
-    bool period_OK;                  // true if with ticket validity period. Otherwise false.
+    bool w_day_OK;                  // true if drawing day of the week matches with ticket. Otherwise false.
+    bool period_OK;                 // true if with ticket validity period. Otherwise false.
     struct tm add;                  // date type used for a_ctual d_rawing d_ate
     struct tm tsd;                  // date type used for t_icket s_tart d_ate
     struct tm ted;                  // date type used for t_icket e_nd d_ate
@@ -376,7 +376,7 @@ bool isValidDrawingDate(int dd_month, int dd_day, int dd_year) {
     double diff_seconds2;           // time difference in seconds
     int dw_day;                     // drawing weekday (0,1,2,3,4,5,6)
     char tw_day;                    // ticket week day (s, w or b)
-
+	char sbuffer[11];				// buffer to hold string for T_Start date
 
     result = false;
 
@@ -397,17 +397,38 @@ bool isValidDrawingDate(int dd_month, int dd_day, int dd_year) {
 
     // build ticket start date structure --------------------------------------
 
-    str_day = strtok(current.T_Start, ".");
+	str_runtime = current.T_Runtime[0];
+	strcpy(sbuffer, current.T_Start);
+
+    str_day = strtok(sbuffer, ".");
     str_month = strtok(NULL, ".");
     str_year = strtok(NULL, ".");
 
-    ts_day = atoi(str_day);
-    ts_month = atoi(str_month);
-    ts_year = atoi(str_year);
+	// calculating ticket start date in case ticket runtime is 'month'
+	if(str_runtime == 'm'){
+
+		ts_day = 1;
+
+		if(atoi(str_month) == 12){
+			ts_month = 1;
+			ts_year = atoi(str_year) + 1;
+		} else {
+			
+			ts_month = atoi(str_month) +1;
+			ts_year = atoi(str_year);
+		}
+
+	// calculating ticket start date in case ticket runtime is not 'month'
+	} else {
+
+		ts_day = atoi(str_day);
+		ts_month = atoi(str_month);
+		ts_year = atoi(str_year);
+	}
 
     tsd.tm_year = ts_year - 1900;
     tsd.tm_mon  = ts_month - 1;
-    tsd.tm_mday = ts_day;
+	tsd.tm_mday = ts_day;
 
     tsd.tm_hour = 0;
     tsd.tm_min  = 0;
@@ -419,30 +440,26 @@ bool isValidDrawingDate(int dd_month, int dd_day, int dd_year) {
 
     // build ticket end date structure ----------------------------------------
 
-    str_runtime = current.T_Runtime[0];
-    //str_d_day = current.T_D_Day[0];
+	ted.tm_year = ts_year - 1900;
+	ted.tm_mon  = ts_month - 1;
+	ted.tm_mday = ts_day;
 
-    ted.tm_year = ts_year - 1900;
-    ted.tm_mon  = ts_month - 1;
-    ted.tm_mday = ts_day;
+	ted.tm_hour = 0;
+	ted.tm_min  = 0;
+	ted.tm_sec  = 1;
+	ted.tm_isdst = -1;       // Change for Summer Time !?
 
-    ted.tm_hour = 0;
-    ted.tm_min  = 0;
-    ted.tm_sec  = 1;
-    ted.tm_isdst = -1;       // Change for Summer Time !?
+	switch (str_runtime) {
 
-    switch (str_runtime) {
-
-        case '1': ted.tm_mday +=7; mktime(&ted); break;     // 1 week = 7 days
-        case '2': ted.tm_mday +=14; mktime(&ted); break;    // 2 weeks = 14 days
-        case '3': ted.tm_mday +=21; mktime(&ted); break;    // 3 weeks = 21 days
-        case '4': ted.tm_mday +=28; mktime(&ted); break;    // 4 weeks = 28 days
-        case '5': ted.tm_mday +=35; mktime(&ted); break;    // 5 weeks = 35 days
-        case 'm': ted.tm_mon +=1; mktime(&ted); break;      // 1 month = same date next month
-        case 'p': ted.tm_year +=25; mktime(&ted); break;    // permanent = 25 years
-        default: break;
-    }
-
+		case '1': ted.tm_mday +=7; mktime(&ted); break;     			// 1 week = 7 days
+		case '2': ted.tm_mday +=14; mktime(&ted); break;    			// 2 weeks = 14 days
+		case '3': ted.tm_mday +=21; mktime(&ted); break;    			// 3 weeks = 21 days
+		case '4': ted.tm_mday +=28; mktime(&ted); break;    			// 4 weeks = 28 days
+		case '5': ted.tm_mday +=35; mktime(&ted); break;    			// 5 weeks = 35 days
+		case 'm': ted.tm_mon +=1; ted.tm_mday -=1; mktime(&ted); break;	// 1st until last day of next month
+		case 'p': ted.tm_year +=25; mktime(&ted); break;    			// permanent = 25 years
+		default: break;
+	}
 
     // Check validity ---------------------------------------------------------
     // Condition 1: weekday 0=Sun, 1=Mon, 2=Tue, 3=Wed, 4=Thu, 5=Fri, 6=Sat
@@ -450,7 +467,7 @@ bool isValidDrawingDate(int dd_month, int dd_day, int dd_year) {
     // Condition 3: Actual drawing date is grater or equals ticket start date
     // Ticket has been validated against drawing date once all conditions above are evaluated true
 
-    diff_seconds1 = difftime(mktime(&add), mktime(&tsd));       // difference between actual drawing date and ticket start date
+    diff_seconds1 = difftime(mktime(&add), mktime(&tsd));       // difference between actual drawing date and ticket start date 
     diff_seconds2 = difftime(mktime(&ted), mktime(&add));       // difference between ticket end date and actual drawing date
 
     dw_day = add.tm_wday;                                       // day of the week for actual drawing date from console input
@@ -499,15 +516,14 @@ bool isValidDrawingDate(int dd_month, int dd_day, int dd_year) {
 
     if(w_day_OK == true && period_OK == true) result = true;
     else result = 0;
-
-    /* Debug
-    printf("DEBUG add: %s\n", asctime(&add));
+    
+    /*printf("DEBUG add: %s\n", asctime(&add));
     printf("DEBUG tsd: %s\n", asctime(&tsd));
     printf("DEBUG ted: %s\n", asctime(&ted));
     printf("DEBUG diff_seconds1: %f\n", diff_seconds1);
     printf("DEBUG diff_seconds2: %f\n", diff_seconds2);
     printf("DEBUG dw_day: %d\n", dw_day);
-    printf("DEBUG tw_day: %c\n", tw_day); */
+    printf("DEBUG tw_day: %c\n", tw_day);*/  
 
     return result;
 
