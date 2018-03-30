@@ -1,4 +1,4 @@
- /*t_evaluate.c | RLotto | gcc | v0.8.355.1720
+ /*t_evaluate.c | RLotto | gcc | v0.9.0-beta
  * Console program for storing and evaluating lottery ticket resultt.
  * ----------------------------------------------------------------------------
  *
@@ -7,7 +7,7 @@
  * Author: 		Reinhard Rozumek
  * Email: 		reinhard@rozumek.de
  * Created: 	10/08/17
- * Last mod:	02/11/18
+ * Last mod:	03/30/18
  *
  * ----------------------------------------------------------------------------
  * This file is part of RLotto.                                               */
@@ -57,11 +57,15 @@ char *getWinClass(int matches, bool bonus_super );	            // returns win cl
 
 int evaluateTicket(void) {
 
-	int sConfirm;						        // yes or no to confirm user input
-	char sPath[45];                             // Full pathname for result file
-	char sPrefix[14] = "Lotto-Result-";         // File prefix
-	char sPostfix[5] = ".txt";                  // File extension
-	char sDrwDate[25];                          // Drawing Date formatted as part of filename
+	int sConfirm;						        		// yes or no to confirm user input
+	char sPath[45];                             		// Full pathname for result file
+	char sPrefix[14] = "Lotto-Result-";         		// File prefix
+	char sPostfix[5] = ".txt";                  		// File extension
+	char sDrwDate[25];                          		// Drawing Date formatted as part of filename
+	
+	static const char str_alpha[] = "alpha";			// Allowed range of values for STAGE
+	static const char str_beta[] = "beta";				// Allowed range of values for STAGE
+	static const char str_production[] = "production";	// Allowed range of values for STAGE
 
 	printf("\n\nEnter actual drawing result.\n");
 
@@ -96,7 +100,19 @@ int evaluateTicket(void) {
 		}
 
 		// Output to result file first part (header information)
-		fprintf(pFile, "%s v%ld.%ld.%ld.%ld\n", THISPROG,MAJOR,MINOR,BUILD,REVISION);
+		if(strcmp(STAGE, str_alpha) == 0){
+			fprintf(pFile, "%s v%ld.%ld.%ld-%s\n",THISPROG,MAJOR,MINOR,PATCH,STAGE);
+		}
+		else if(strcmp(STAGE, str_beta) == 0) {
+			fprintf(pFile, "%s v%ld.%ld.%ld-%s\n",THISPROG,MAJOR,MINOR,PATCH,STAGE);
+		}
+		else if(strcmp(STAGE, str_production) == 0) {
+			fprintf(pFile, "%s v%ld.%ld.%ld\n",THISPROG,MAJOR,MINOR,PATCH);
+		}
+		else {
+			fprintf(pFile, "%s v%ld.%ld.%ld - WARNING - release state undefined!\n",THISPROG,MAJOR,MINOR,PATCH);
+		}
+	
 		fprintf(pFile, "Evaluating lottery results\n");
 		fprintf(pFile, "Lottery Ticket No: %s\n", current.T_No);
 

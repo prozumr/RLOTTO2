@@ -1,4 +1,4 @@
- /*t_add.c | RLotto | gcc | v0.8.355.1720
+ /*t_add.c | RLotto | gcc | v0.9.0-beta
  * Console program for storing and evaluating lottery ticket resultt.
  * ----------------------------------------------------------------------------
  *

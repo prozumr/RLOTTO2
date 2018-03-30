@@ -1,4 +1,4 @@
- /*rlotto.c | RLotto | gcc | v0.8.355.1720
+ /*rlotto.c | RLotto | gcc | v0.9.0-beta
  * Console program for storing and evaluating lottery ticket results.
  * ----------------------------------------------------------------------------
  *
@@ -7,7 +7,7 @@
  * Author: 		Reinhard Rozumek
  * Email: 		reinhard@rozumek.de
  * Created: 	09/23/17
- * Last mod:	02/11/17
+ * Last mod:	03/30/17
  *
  * ----------------------------------------------------------------------------
  * This file is part of RLotto.
@@ -121,11 +121,34 @@ int main() {
  * WELCOME
  *****************************************************************************/
 
- /* Welcome message and check for default RLotto file to open. */
+ /* Welcome to display Program Name and version. Actual version information is
+ 	stored in header file version.h. Pre-release stage (alpha, beta is 
+	indicated, stage for production release is not indicated. I.e. if only the 
+	version number is displayed it is a production release. If any other value
+	for STAGE is accidently used in version.h than "alpha", beta", "production"
+	the welcome message throws a warning.*/
 
 int welcome(void) {
 
-	printf("\n%s v%ld.%ld.%ld.%ld\n",THISPROG,MAJOR,MINOR,BUILD,REVISION);
+	
+	// Allowed range of values for STAGE
+	static const char str_alpha[] = "alpha";
+	static const char str_beta[] = "beta";
+	static const char str_production[] = "production";
+
+	if(strcmp(STAGE, str_alpha) == 0){
+		printf("\n%s v%ld.%ld.%ld-%s\n",THISPROG,MAJOR,MINOR,PATCH,STAGE);
+	}
+	else if(strcmp(STAGE, str_beta) == 0) {
+		printf("\n%s v%ld.%ld.%ld-%s\n",THISPROG,MAJOR,MINOR,PATCH,STAGE);
+	}
+	else if(strcmp(STAGE, str_production) == 0) {
+		printf("\n%s v%ld.%ld.%ld\n",THISPROG,MAJOR,MINOR,PATCH);
+	}
+	else {
+		printf("\n%s v%ld.%ld.%ld - WARNING - release state undefined!\n",THISPROG,MAJOR,MINOR,PATCH);
+	}
+	
 	printf("Evaluating lottery results\n") ;
 
 	return 0;
