@@ -20,13 +20,13 @@ https://github.com/prozumr/RLOTTO2/releases
 
 Required source code files are:
 
-```
-rlotto.c, t_select.c, t_add.c, t_evaluate.c, t_delete.c, settings.c, t_common.c, rlotto.h,  version.h 
-```
+rlotto.c, t_select.c, t_add.c, t_evaluate.c, t_delete.c, settings.c, t_common.c, rlotto.h, version.h 
 
 You can compile RLOTTO with the GNU C Compiler by using the following command:
 
+```
 gcc -Wall rlotto.c t_select.c t_add.c t_evaluate.c t_delete.c settings.c t_common.c -o rlotto.exe
+```
 
 For compiling for Linux use the provided make file.
 
